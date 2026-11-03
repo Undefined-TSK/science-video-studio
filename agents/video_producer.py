@@ -2,8 +2,8 @@
 厨师（Agent）—— 走进食材超市，自主选材炒菜。
 
 所有货架摆满：
-  tools=  → 眼前货架 A：厨具（E2B 三件套 + 文件工具）
-  mcps=   → 眼前货架 B：远程能力窗口（Blender 官方 MCP / ElevenLabs-TTS）
+  tools=  → 眼前货架 A：厨具（一个共享 E2B 沙箱 + 文件工具）
+  mcps=   → 眼前货架 B：远程能力窗口（Blender 官方 MCP）
   skills= → 方法论货架（Remotion / HyperFrames / CrewAI 官方 SKILL）
   knowledge_sources= → 导购广播（6 家官方文档原文）
   memory= → 回头客记忆
@@ -13,18 +13,15 @@
 厨师根据点单（Task）自主决定用什么食材、什么顺序、怎么处理。
 """
 import os
-import json
 from pathlib import Path
 from crewai import Agent
-from crewai.mcp import MCPServerStdio, MCPServerHTTP
+from crewai.mcp import MCPServerStdio
 from crewai.agent.planning_config import PlanningConfig
 from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
 from crewai_tools import (
     FileReadTool,
     FileWriterTool,
-    E2BExecTool,
     E2BPythonTool,
-    E2BFileTool,
 )
 
 # 项目根目录（agents/video_producer.py → 上两级）
@@ -75,7 +72,6 @@ knowledge_sources = [
         file_paths=[
             DOCS / "elevenlabs" / "llms-full.txt",
             DOCS / "elevenlabs" / "openapi.json",
-            DOCS / "elevenlabs" / "hosted-mcp.md",
             DOCS / "elevenlabs" / "tts-best-practices.md",
             DOCS / "elevenlabs" / "music-best-practices.md",
         ],
@@ -110,16 +106,17 @@ video_producer = Agent(
         "- 3D assets: Blender Lab official MCP (26 tools; requires a running Blender 5.1+ "
         "session with the official add-on) → glb → three.js (GLTFLoader); or procedural "
         "geometry inside Remotion/three.js\n"
-        "- TTS: ElevenLabs hosted MCP (TTS tools only — do not touch ElevenAgents management tools) "
-        "+ ElevenLabs REST POST /v1/text-to-speech/{voice_id} (xi-api-key header) "
+        "- TTS: ElevenLabs REST POST /v1/text-to-speech/{voice_id} (xi-api-key header) "
         "+ Alibaba Bailian models (qwen3-tts-flash, qwen-audio-3.1-tts-flash/plus, "
         "cosyvoice-v3-flash/plus/v2, sambert-zhichu-v1, MiniMax/speech-2.8-hd)\n"
         "- SFX: ElevenLabs REST POST /v1/sound-generation + Alibaba Bailian "
         "qwen-audio-3.1-tts-next (Audiogen)\n"
         "- BGM: ElevenLabs REST POST /v1/music + Alibaba Bailian fun-music-v1/preview\n\n"
-        "Use the E2B sandbox to run CLI commands (Remotion, HyperFrames) and Python code "
-        "(official elevenlabs SDK or REST, dashscope SDK). The full ElevenLabs OpenAPI contract "
-        "is in your knowledge sources. Decide your own workflow."
+        "You have exactly one E2B sandbox. Use it for shell commands (Remotion, HyperFrames), "
+        "file operations, and Python code. Pip-install `requests` or the official `elevenlabs` "
+        "SDK inside it, then call the official REST endpoints with the API keys already present "
+        "in the sandbox environment (ELEVENLABS_API_KEY, DASHSCOPE_API_KEY). "
+        "The full ElevenLabs OpenAPI contract is in your knowledge sources. Decide your own workflow."
     ),
 
     # ── 货架标签 + 商品本体（方法论）──
@@ -142,24 +139,25 @@ video_producer = Agent(
                 "blender-mcp",
             ],
         ),
-        # ElevenLabs 官方托管 MCP：只用 TTS 工具
-        MCPServerHTTP(
-            url="https://api.elevenlabs.io/v1/mcp",
-            headers={"Authorization": f"Bearer {os.getenv('ELEVENLABS_TOKEN', '')}"},
-            streamable=True,
-            cache_tools_list=True,
-        ),
+        # ElevenLabs 官方托管 MCP 已移除：它是 ElevenAgents 管理工具，
+        # 不提供通用 TTS/SFX/BGM，且会带来 workspace agent 管理权限。
     ],
 
     # ── 眼前货架 A（厨具 + 本地可调用物执行器）──
     tools=[
-        # 通用文件工具
+        # 通用文件工具（宿主机）
         FileReadTool(),
         FileWriterTool(),
-        # E2B 沙箱三件套（厨具）
-        E2BExecTool(persistent=True),      # 任意 shell：npx remotion render, hyperframes render, pip install dashscope
-        E2BPythonTool(persistent=True),    # 任意 Python：from dashscope import Generation; requests.post(ElevenLabs REST)
-        E2BFileTool(persistent=True),      # 任意文件：写 React/HTML/glb/音频
+        # 唯一 E2B 沙箱：shell / Python / 文件操作都在这一个沙箱里
+        # 密钥通过 envs 注入沙箱，Agent 用 requests 调官方 REST
+        E2BPythonTool(
+            persistent=True,
+            envs={
+                k: v
+                for k in ("ELEVENLABS_API_KEY", "DASHSCOPE_API_KEY")
+                if (v := os.getenv(k))
+            },
+        ),
     ],
 
     # ── 导购广播（官方文档原文）──
