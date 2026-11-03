@@ -1,0 +1,47 @@
+# Remotion documentation
+
+> Remotion is a React framework for creating videos programmatically.
+
+This is a guide to the main documentation topics. Fetch the linked Markdown pages for details and follow their links to more specific guides and APIs.
+
+## Getting started
+
+- [Creating a new project](https://www.remotion.dev/docs/index.md)
+- [The core idea](https://www.remotion.dev/docs/idea.md)
+- [API overview](https://www.remotion.dev/docs/api.md)
+
+## Creating videos
+
+- [Animating properties](https://www.remotion.dev/docs/animating-properties.md)
+- [Video and Audio](https://www.remotion.dev/docs/video-and-audio.md)
+- [Adding video and audio](https://www.remotion.dev/docs/videos/index.md)
+- [@remotion/media](https://www.remotion.dev/docs/media/index.md)
+- [Using fonts](https://www.remotion.dev/docs/fonts.md)
+- [@remotion/transitions](https://www.remotion.dev/docs/transitions/index.md)
+- [Captions](https://www.remotion.dev/docs/captions/index.md)
+- [Effects](https://www.remotion.dev/docs/effects.md)
+- [@remotion/shapes](https://www.remotion.dev/docs/shapes/index.md)
+
+## Previewing and rendering
+
+- [Starting the Studio](https://www.remotion.dev/docs/studio/studio.md)
+- [Render your video](https://www.remotion.dev/docs/render.md)
+- [Command line reference](https://www.remotion.dev/docs/cli/cli.md)
+- [Configuration file](https://www.remotion.dev/docs/config.md)
+- [@remotion/renderer](https://www.remotion.dev/docs/renderer.md)
+- [@remotion/player](https://www.remotion.dev/docs/player/index.md)
+- [Client-side rendering](https://www.remotion.dev/docs/client-side-rendering/index.md)
+- [@remotion/lambda](https://www.remotion.dev/docs/lambda.md)
+
+## Building applications
+
+- [Editor Starter](https://www.remotion.dev/docs/editor-starter/index.md)
+- [Remotion Timeline](https://www.remotion.dev/docs/timeline/index.md)
+- [Mediabunny](https://www.remotion.dev/docs/mediabunny/index.md)
+- [@remotion/media-parser](https://www.remotion.dev/docs/media-parser/index.md)
+- [@remotion/webcodecs](https://www.remotion.dev/docs/webcodecs/index.md)
+
+## AI
+
+- [Building with Remotion and AI](https://www.remotion.dev/docs/ai/index.md)
+- [Prompting videos with coding agents](https://www.remotion.dev/docs/ai/coding-agents.md)

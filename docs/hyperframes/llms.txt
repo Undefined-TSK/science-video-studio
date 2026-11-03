@@ -1,0 +1,129 @@
+# HyperFrames 中文文档 | AI 增强索引
+# 站点: https://docs.hyperframes-zh.cn
+# 版本: 2026-06-05
+
+---
+
+## 关于本站
+
+HyperFrames 中文文档 (docs.hyperframes-zh.cn) 是 HyperFrames 开源视频渲染框架的社区中文翻译。
+HyperFrames 是 HeyGen 开发的开源项目，使用 HTML/CSS/JS 创建确定性 MP4 视频。
+
+---
+
+## 核心页面全文
+
+### 介绍
+
+> 编写 HTML。渲染视频。专为智能体打造。
+
+Hyperframes 是一个开源框架，可将 HTML 转换为确定性的、逐帧渲染的视频 - 因此您可以像构建网页一样定义视频。
+
+每个组合是具有数据属性的 HTML 文件。动画使用 GSAP、Lottie、CSS 或任何可以查找给定帧的运行时。没有自定义 DSL，没有专有的组件系统，也没有 React 要求。
+
+对于 AI 代理: HyperFrames 作品是纯 HTML 文档——LLM 最擅长生成的格式。CLI 默认非交互式——所有输入通过标志、纯文本输出、错误快速失败。
+
+渲染管道: `frame = floor(time * fps)` — 每个帧都是通过 Chrome 的 `beginFrame` API 独立捕获并使用 FFmpeg 进行编码。相同输入始终产生相同输出。
+
+三步工作流:
+1. 编写 HTML — 每个元素获取 `data-start`、`data-duration`、`data-track-index` 属性
+2. 预览 — `npx hyperframes preview`，无需构建步骤
+3. 渲染 — `npx hyperframes render --output output.mp4`
+
+五个包: @hyperframes/core (类型/解析/linter), @hyperframes/engine (无头 Chrome 捕获), @hyperframes/producer (渲染管道), @hyperframes/studio (可视化编辑器), HyperFrames CLI
+
+### 核心概念: 合成
+
+组合是定义视频时间线的 HTML 文档。每个组合需要一个带有 `data-composition-id` 的根元素。
+
+```html
+<div id="root" data-composition-id="root"
+     data-start="0" data-width="1920" data-height="1080">
+</div>
+```
+
+`index.html` 是顶层组合。剪辑类型: `<video>`、`<img>`、`<audio>`、嵌套 `<div data-composition-id="...">`。
+
+嵌套组合两种方式:
+1. 外部文件: `data-composition-src="compositions/intro-anim.html"` + `<template>` 标签（推荐）
+2. 内联: 直接在父级内部定义
+
+两层架构: HTML 层负责声明性结构（播放什么、何时播放、轨道），脚本层负责创意动画（GSAP、画布、SVG）。脚本不应控制媒体播放或显示/隐藏。
+
+变量系统: 子组合用 `data-composition-variables` 声明，主机用 `data-variable-values` 传值，脚本通过 `__hyperframes.getVariables()` 读取。
+
+---
+
+## 完整页面索引
+
+### 文档 (Docs)
+- [介绍](https://docs.hyperframes-zh.cn/introduction): 框架概述
+- [快速入门](https://docs.hyperframes-zh.cn/quickstart): 5分钟从零渲染
+- [展示](https://docs.hyperframes-zh.cn/showcase): 视频作品集
+- [示例](https://docs.hyperframes-zh.cn/examples): 内置示例
+- [更新日志](https://docs.hyperframes-zh.cn/changelog)
+- [发布视频](https://docs.hyperframes-zh.cn/launch-videos)
+- [每周更新](https://docs.hyperframes-zh.cn/weekly-updates)
+
+### 核心概念 (Concepts)
+- [合成](https://docs.hyperframes-zh.cn/concepts/compositions): 视频构建块
+- [数据属性](https://docs.hyperframes-zh.cn/concepts/data-attributes): 时序/媒体/合成属性
+- [变量](https://docs.hyperframes-zh.cn/concepts/variables): 参数化合成
+- [帧适配器](https://docs.hyperframes-zh.cn/concepts/frame-adapters): 动画运行时
+- [确定论](https://docs.hyperframes-zh.cn/concepts/determinism): 确定性渲染
+
+### 指南 (Guides)
+- [管道](https://docs.hyperframes-zh.cn/guides/pipeline): 7 步制作流程
+- [GSAP 动画](https://docs.hyperframes-zh.cn/guides/gsap-animation)
+- [渲染](https://docs.hyperframes-zh.cn/guides/rendering)
+- [Claude 设计](https://docs.hyperframes-zh.cn/guides/claude-design)
+- [开放设计](https://docs.hyperframes-zh.cn/guides/open-design)
+- [提示指南](https://docs.hyperframes-zh.cn/guides/prompting)
+- [HyperFrames vs Remotion](https://docs.hyperframes-zh.cn/guides/hyperframes-vs-remotion)
+- [4K 渲染](https://docs.hyperframes-zh.cn/guides/4k-rendering)
+- [HDR](https://docs.hyperframes-zh.cn/guides/hdr)
+- [性能](https://docs.hyperframes-zh.cn/guides/performance)
+- [网站到视频](https://docs.hyperframes-zh.cn/guides/website-to-video)
+- 更多: html-in-canvas, antigravity, copilot-cli, troubleshooting, common-mistakes, feedback 等
+
+### 套餐 (Packages)
+- [CLI](https://docs.hyperframes-zh.cn/packages/cli)
+- [@hyperframes/core](https://docs.hyperframes-zh.cn/packages/core)
+- [@hyperframes/engine](https://docs.hyperframes-zh.cn/packages/engine)
+- [@hyperframes/producer](https://docs.hyperframes-zh.cn/packages/producer)
+- [@hyperframes/studio](https://docs.hyperframes-zh.cn/packages/studio)
+- [@hyperframes/player](https://docs.hyperframes-zh.cn/packages/player)
+
+### 部署 (Deploy)
+- [AWS Lambda](https://docs.hyperframes-zh.cn/deploy/aws-lambda)
+- [迁移指南](https://docs.hyperframes-zh.cn/deploy/migrating-to-hyperframes-lambda)
+- [Lambda 模板](https://docs.hyperframes-zh.cn/deploy/templates-on-lambda)
+
+### 参考 (Reference)
+- [HTML 架构](https://docs.hyperframes-zh.cn/reference/html-schema)
+
+### 贡献 (Contributing)
+- [贡献指南](https://docs.hyperframes-zh.cn/contributing)
+- [目录贡献](https://docs.hyperframes-zh.cn/contributing/catalog)
+- [发布渠道](https://docs.hyperframes-zh.cn/contributing/release-channels)
+- [更新日志流程](https://docs.hyperframes-zh.cn/contributing/changelog-process)
+- [测试本地更改](https://docs.hyperframes-zh.cn/contributing/testing-local-changes)
+
+### 社区 (Community)
+- [采纳者](https://docs.hyperframes-zh.cn/community/adopters)
+
+### 目录: 86 Blocks + 23 Components
+覆盖: 着色器转场(14)、CSS 过渡(13)、社交叠加(7)、数据可视化(7)、代码片段主题(24)、UI/液态玻璃展示(12)、特效(8)、字幕组件(15)、HUD/叠加(8)
+完整列表参见: https://docs.hyperframes-zh.cn/llms-full.txt
+
+---
+
+## 技术数据
+
+- 渲染分辨率: 最高 4K (3840×2160)，通过 Chrome deviceScaleFactor 从 1080p 超采样
+- HDR 标准: BT.2020 PQ 或 HLG, 10-bit H.265
+- 视频格式: MP4, MOV, WebM
+- 最低 Node.js 版本: 22+
+- 许可证: Apache 2.0
+- 官方网站: https://hyperframes.heygen.com
+- GitHub: https://github.com/heygen-com/hyperframes

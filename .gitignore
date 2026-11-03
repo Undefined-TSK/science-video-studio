@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node.js (local CLI testing only; agent runs Remotion/HyperFrames in E2B sandbox)
+node_modules/
+
+# CrewAI runtime artifacts
+.agents/
+skills-lock.json
+
+# IDE / OS
+.idea/
+.vscode/
+.claude/
+.DS_Store
+*.swp
+*.swo
+
+# Output
+output/
+*.mp4
+*.mov
+*.wav
+*.mp3
+*.glb
+*.gltf
