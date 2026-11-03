@@ -3,7 +3,7 @@
 
 所有货架摆满：
   tools=  → 眼前货架 A：厨具（E2B 三件套 + 文件工具）
-  mcps=   → 眼前货架 B：远程能力窗口（ElevenLabs-TTS）
+  mcps=   → 眼前货架 B：远程能力窗口（Blender 官方 MCP / ElevenLabs-TTS）
   skills= → 方法论货架（Remotion / HyperFrames / CrewAI 官方 SKILL）
   knowledge_sources= → 导购广播（6 家官方文档原文）
   memory= → 回头客记忆
@@ -13,9 +13,10 @@
 厨师根据点单（Task）自主决定用什么食材、什么顺序、怎么处理。
 """
 import os
+import json
 from pathlib import Path
 from crewai import Agent
-from crewai.mcp import MCPServerHTTP
+from crewai.mcp import MCPServerStdio, MCPServerHTTP
 from crewai.agent.planning_config import PlanningConfig
 from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
 from crewai_tools import (
@@ -38,6 +39,12 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 # ═══════════════════════════════════════════════════════════════
 DOCS = PROJECT_ROOT / "docs"
 
+# Blender 官方 MCP 服务器（Blender Lab 源码，原样放在 vendor/ 下）
+_blender_dir = Path(os.getenv("BLENDER_MCP_DIR", "vendor/blender_mcp"))
+BLENDER_MCP_DIR = (
+    _blender_dir if _blender_dir.is_absolute() else PROJECT_ROOT / _blender_dir
+)
+
 knowledge_sources = [
     # CrewAI 官方文档
     TextFileKnowledgeSource(
@@ -54,15 +61,20 @@ knowledge_sources = [
         file_paths=[DOCS / "three" / "llms.txt", DOCS / "three" / "llms-full.txt"],
         collection_name="three",
     ),
-    # Blender glTF 导出文档
+    # Blender 官方 MCP 文档 + glTF 导出文档
     TextFileKnowledgeSource(
-        file_paths=[DOCS / "blender" / "gltf-export.html"],
+        file_paths=[
+            DOCS / "blender" / "mcp-server.html",
+            DOCS / "blender" / "mcp-tools.rst",
+            DOCS / "blender" / "gltf-export.html",
+        ],
         collection_name="blender",
     ),
-    # ElevenLabs 官方文档
+    # ElevenLabs 官方文档 + 官方 OpenAPI 契约
     TextFileKnowledgeSource(
         file_paths=[
             DOCS / "elevenlabs" / "llms-full.txt",
+            DOCS / "elevenlabs" / "openapi.json",
             DOCS / "elevenlabs" / "hosted-mcp.md",
             DOCS / "elevenlabs" / "tts-best-practices.md",
             DOCS / "elevenlabs" / "music-best-practices.md",
@@ -95,15 +107,19 @@ video_producer = Agent(
         "in what order, and how to process each one.\n\n"
         "Available official capabilities:\n"
         "- 2D+3D rendering: Remotion (React + @remotion/three), HyperFrames (HTML+GSAP)\n"
-        "- 3D assets: procedural geometry inside Remotion/three.js; Blender supplies the official "
-        "glTF export reference only (Blender has no official MCP, so do not call a Blender MCP)\n"
-        "- TTS: ElevenLabs (MCP, use TTS tools only — do not touch ElevenAgents management tools) "
+        "- 3D assets: Blender Lab official MCP (26 tools; requires a running Blender 5.1+ "
+        "session with the official add-on) → glb → three.js (GLTFLoader); or procedural "
+        "geometry inside Remotion/three.js\n"
+        "- TTS: ElevenLabs hosted MCP (TTS tools only — do not touch ElevenAgents management tools) "
+        "+ ElevenLabs REST POST /v1/text-to-speech/{voice_id} (xi-api-key header) "
         "+ Alibaba Bailian models (qwen3-tts-flash, qwen-audio-3.1-tts-flash/plus, "
         "cosyvoice-v3-flash/plus/v2, sambert-zhichu-v1, MiniMax/speech-2.8-hd)\n"
-        "- SFX: ElevenLabs REST + Alibaba Bailian qwen-audio-3.1-tts-next (Audiogen)\n"
-        "- BGM: ElevenLabs REST + Alibaba Bailian fun-music-v1/preview\n\n"
+        "- SFX: ElevenLabs REST POST /v1/sound-generation + Alibaba Bailian "
+        "qwen-audio-3.1-tts-next (Audiogen)\n"
+        "- BGM: ElevenLabs REST POST /v1/music + Alibaba Bailian fun-music-v1/preview\n\n"
         "Use the E2B sandbox to run CLI commands (Remotion, HyperFrames) and Python code "
-        "(dashscope SDK, ElevenLabs REST). Decide your own workflow."
+        "(official elevenlabs SDK or REST, dashscope SDK). The full ElevenLabs OpenAPI contract "
+        "is in your knowledge sources. Decide your own workflow."
     ),
 
     # ── 货架标签 + 商品本体（方法论）──
@@ -115,6 +131,17 @@ video_producer = Agent(
 
     # ── 眼前货架 B（远程可调用物）──
     mcps=[
+        # Blender Lab 官方 MCP（26 工具）：uv --directory <blender_mcp> run blender-mcp
+        # 前提：Blender 5.1+ 已安装官方 add-on 并运行，add-on 负责与 MCP 服务器 TCP 通信
+        MCPServerStdio(
+            command=os.getenv("BLENDER_MCP_COMMAND", "uv"),
+            args=[
+                "--directory",
+                str(BLENDER_MCP_DIR),
+                "run",
+                "blender-mcp",
+            ],
+        ),
         # ElevenLabs 官方托管 MCP：只用 TTS 工具
         MCPServerHTTP(
             url="https://api.elevenlabs.io/v1/mcp",

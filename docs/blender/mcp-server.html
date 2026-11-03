@@ -1,0 +1,1286 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8">
+		<title>  MCP Server &mdash; Blender</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="MCP server offering a natural language interface with Blender's Python API, improving access to documentation, and allowing users to explore and understand complex setups." >
+
+							
+		
+		<meta name="author" content="Blender Foundation">
+		<meta name="theme-color" content="#ed8f31">
+		<meta property="og:site_name" content="Blender" >
+		<meta property="og:title" content="  MCP Server &mdash; Blender" >
+		<meta property="og:description" content="MCP server offering a natural language interface with Blender's Python API, improving access to documentation, and allowing users to explore and understand complex setups.">
+		<meta property="og:url" content="https://www.blender.org/lab/mcp-server/">
+		<meta property="og:image" content="https://www.blender.org/wp-content/themes/bthree/assets_shared/images/blender_the_freedom_to_create_02.jpg">
+		<meta property="og:type" content="website">
+						<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@blender">
+		<meta name="twitter:creator" content="@blender">
+		<meta name="twitter:title" content="  MCP Server &mdash; Blender">
+		<meta name="twitter:description" content="MCP server offering a natural language interface with Blender's Python API, improving access to documentation, and allowing users to explore and understand complex setups.">
+		<meta name="twitter:image" content="https://www.blender.org/wp-content/themes/bthree/assets_shared/images/blender_the_freedom_to_create_02.jpg">
+		<meta name="twitter:image:alt" content="MCP server offering a natural language interface with Blender's Python API, improving access to documentation, and allowing users to explore and understand complex setups.">
+
+		<link rel="stylesheet" href="https://www.blender.org/wp-content/themes/bthree/style.css?x50197" type="text/css" media="screen" />
+		<link rel="apple-touch-icon" sizes="180x180" href="https://www.blender.org/wp-content/themes/bthree/assets/icons/apple-touch-icon.png">
+		<link rel="icon" type="image/svg+xml" href="https://www.blender.org/wp-content/themes/bthree/assets/icons/favicon.svg">
+		<link rel="icon" type="image/png" sizes="32x32" href="https://www.blender.org/wp-content/themes/bthree/assets/icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="https://www.blender.org/wp-content/themes/bthree/assets/icons/favicon-16x16.png">
+
+				<script async src="https://analytics.blender.org/js/pa-U2drbvocUhlojMlK4BOLL.js"></script>
+				<script>
+			window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+			plausible.init()
+		</script>
+
+		<meta name='robots' content='max-image-preview:large' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.blender.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.blender.org%2Flab%2Fmcp-server%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.blender.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.blender.org%2Flab%2Fmcp-server%2F&#038;format=xml" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-top-color"],[style*="; border-top-color"]){border-top-style:solid}html :where([style^=border-right-color],[style*=";border-right-color"],[style*="; border-right-color"]){border-right-style:solid}html :where([style^=border-bottom-color],[style*=";border-bottom-color"],[style*="; border-bottom-color"]){border-bottom-style:solid}html :where([style^=border-left-color],[style*=";border-left-color"],[style*="; border-left-color"]){border-left-style:solid}html :where([style^=border-width],[style*=";border-width"],[style*="; border-width"]){border-style:solid}html :where([style^=border-top-width],[style*=";border-top-width"],[style*="; border-top-width"]){border-top-style:solid}html :where([style^=border-right-width],[style*=";border-right-width"],[style*="; border-right-width"]){border-right-style:solid}html :where([style^=border-bottom-width],[style*=";border-bottom-width"],[style*="; border-bottom-width"]){border-bottom-style:solid}html :where([style^=border-left-width],[style*=";border-left-width"],[style*="; border-left-width"]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+</style>
+<style id="wp-block-details-inline-css">
+.wp-block-details{box-sizing:border-box}.wp-block-details summary{cursor:pointer}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/details/style.min.css */
+</style>
+<style id="wp-block-heading-inline-css">
+h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-background,h3:where(.wp-block-heading).has-background,h4:where(.wp-block-heading).has-background,h5:where(.wp-block-heading).has-background,h6:where(.wp-block-heading).has-background{padding:1.25em 2.375em}h1.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h1.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h2.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h2.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h3.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h3.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h4.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h4.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h5.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h5.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h6.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]){rotate:180deg}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/heading/style.min.css */
+</style>
+<style id="wp-block-image-inline-css">
+.wp-block-image>a,.wp-block-image>figure>a{display:inline-block}.wp-block-image img{box-sizing:border-box;height:auto;max-width:100%;vertical-align:bottom}@media not (prefers-reduced-motion){.wp-block-image img.hide{visibility:hidden}.wp-block-image img.show{animation:show-content-image .4s}}.wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{border-radius:inherit}.wp-block-image.has-custom-border img{box-sizing:border-box}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull>a,.wp-block-image.alignwide>a{width:100%}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.aligncenter,.wp-block-image.alignleft,.wp-block-image.alignright{display:table}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image.alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image :where(figcaption){margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}:root :where(.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img){border-radius:9999px}.wp-block-image figure{margin:0}.wp-lightbox-container{display:flex;flex-direction:column;position:relative}.wp-lightbox-container img{cursor:zoom-in}.wp-lightbox-container img:hover+button{opacity:1}.wp-lightbox-container button{align-items:center;backdrop-filter:blur(16px) saturate(180%);background-color:rgba(90,90,90,.25);border:none;border-radius:4px;cursor:zoom-in;display:flex;height:20px;justify-content:center;opacity:0;padding:0;position:absolute;right:16px;text-align:center;top:16px;width:20px;z-index:100}@media not (prefers-reduced-motion){.wp-lightbox-container button{transition:opacity .2s ease}}.wp-lightbox-container button:focus-visible{outline:3px auto rgba(90,90,90,.25);outline:3px auto -webkit-focus-ring-color;outline-offset:3px}.wp-lightbox-container button:hover{cursor:pointer;opacity:1}.wp-lightbox-container button:focus{opacity:1}.wp-lightbox-container button:focus,.wp-lightbox-container button:hover,.wp-lightbox-container button:not(:hover):not(:active):not(.has-background){background-color:rgba(90,90,90,.25);border:none}.wp-lightbox-overlay{box-sizing:border-box;cursor:zoom-out;height:100vh;left:0;overflow:hidden;position:fixed;top:0;visibility:hidden;width:100%;z-index:100000}.wp-lightbox-overlay .wp-lightbox-close-button{align-items:center;cursor:pointer;display:flex;font-family:inherit;gap:8px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 4px;position:absolute;right:calc(env(safe-area-inset-right) + 16px);top:calc(env(safe-area-inset-top) + 16px);z-index:5000000}.wp-lightbox-overlay .wp-lightbox-close-button:focus,.wp-lightbox-overlay .wp-lightbox-close-button:hover,.wp-lightbox-overlay .wp-lightbox-close-button:not(:hover):not(:active):not(.has-background){background:none;border:none}.wp-lightbox-overlay .wp-lightbox-close-button:has(.wp-lightbox-close-text:not([hidden])) .wp-lightbox-close-icon svg{height:1em;width:1em}.wp-lightbox-overlay .wp-lightbox-close-icon svg{display:block}.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{align-items:center;bottom:16px;cursor:pointer;display:flex;font-family:inherit;gap:4px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 8px;position:absolute;z-index:2000002}.wp-lightbox-overlay .wp-lightbox-navigation-button-next[hidden],.wp-lightbox-overlay .wp-lightbox-navigation-button-prev[hidden]{display:none}@media (min-width:960px){.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{bottom:50%;transform:translateY(-50%)}}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:not(:hover):not(:active):not(.has-background),.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:not(:hover):not(:active):not(.has-background){background:none;border:none;padding:0 8px}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg{display:block;height:1.5em;width:1.5em}.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{left:calc(env(safe-area-inset-left) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-button-next{right:calc(env(safe-area-inset-right) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-icon svg{vertical-align:middle}.wp-lightbox-overlay .lightbox-image-container{height:var(--wp--lightbox-container-height);left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);transform-origin:top left;width:var(--wp--lightbox-container-width);z-index:2000001}.wp-lightbox-overlay .wp-block-image{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;margin:0;position:relative;transform-origin:0 0;width:100%;z-index:3000000}.wp-lightbox-overlay .wp-block-image img{height:var(--wp--lightbox-image-height);min-height:var(--wp--lightbox-image-height);min-width:var(--wp--lightbox-image-width);width:var(--wp--lightbox-image-width)}.wp-lightbox-overlay .wp-block-image figcaption{display:none}.wp-lightbox-overlay button{background:none;border:none}.wp-lightbox-overlay .scrim{background-color:#fff;height:100%;opacity:.9;position:absolute;width:100%;z-index:2000000}.wp-lightbox-overlay.active{visibility:visible}@media not (prefers-reduced-motion){.wp-lightbox-overlay.active{animation:turn-on-visibility .25s both}.wp-lightbox-overlay.active img{animation:turn-on-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active){animation:turn-off-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active) img{animation:turn-off-visibility .25s both}.wp-lightbox-overlay.zoom.active{animation:none;opacity:1;visibility:visible}.wp-lightbox-overlay.zoom.active .lightbox-image-container{animation:lightbox-zoom-in .4s}.wp-lightbox-overlay.zoom.active .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.active .scrim{animation:turn-on-visibility .4s forwards}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active){animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container{animation:lightbox-zoom-out .4s}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .scrim{animation:turn-off-visibility .4s forwards}}@keyframes show-content-image{0%{visibility:hidden}99%{visibility:hidden}to{visibility:visible}}@keyframes turn-on-visibility{0%{opacity:0}to{opacity:1}}@keyframes turn-off-visibility{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes lightbox-zoom-in{0%{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale))}to{transform:translate(-50%,-50%) scale(1)}}@keyframes lightbox-zoom-out{0%{transform:translate(-50%,-50%) scale(1);visibility:visible}99%{visibility:visible}to{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));visibility:hidden}}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/image/style.min.css */
+</style>
+<style id="wp-block-list-inline-css">
+ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:1.25em 2.375em}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/list/style.min.css */
+</style>
+<style id="wp-block-paragraph-inline-css">
+.is-small-text{font-size:.875em}.is-regular-text{font-size:1em}.is-large-text{font-size:2.25em}.is-larger-text{font-size:3em}.has-drop-cap:not(:focus):first-letter{float:left;font-size:8.4em;font-style:normal;font-weight:100;line-height:.68;margin:.05em .1em 0 0;text-transform:uppercase}body.rtl .has-drop-cap:not(:focus):first-letter{float:none;margin-left:.1em}p.has-drop-cap.has-background{overflow:hidden}:root :where(p.has-background){padding:1.25em 2.375em}:where(p.has-text-color:not(.has-link-color)) a{color:inherit}p.has-text-align-left[style*="writing-mode:vertical-lr"],p.has-text-align-right[style*="writing-mode:vertical-rl"]{rotate:180deg}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/paragraph/style.min.css */
+</style>
+<style id="wp-block-code-inline-css">
+.wp-block-code{box-sizing:border-box}.wp-block-code code{direction:ltr;display:block;font-family:inherit;overflow-wrap:break-word;text-align:initial;white-space:break-spaces}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/code/style.min.css */
+</style>
+<style id="wp-block-group-inline-css">
+.wp-block-group{box-sizing:border-box}:where(.wp-block-group.wp-block-group-is-layout-constrained){position:relative}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/group/style.min.css */
+</style>
+<style id="wp-block-separator-inline-css">
+@charset "UTF-8";.wp-block-separator{border:none;border-top:2px solid}:root :where(.wp-block-separator.is-style-dots){height:auto;line-height:1;text-align:center}:root :where(.wp-block-separator.is-style-dots):before{color:currentColor;content:"···";font-family:serif;font-size:1.5em;letter-spacing:2em;padding-left:2em}.wp-block-separator.is-style-dots{background:none!important;border:none!important}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/separator/style.min.css */
+</style>
+<style id="wp-block-table-inline-css">
+.wp-block-table{overflow-x:auto}.wp-block-table table{border-collapse:collapse;width:100%}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{border:1px solid;padding:.5em}.wp-block-table .has-fixed-layout{table-layout:fixed;width:100%}.wp-block-table .has-fixed-layout td,.wp-block-table .has-fixed-layout th{word-break:break-word}.wp-block-table.aligncenter,.wp-block-table.alignleft,.wp-block-table.alignright{display:table;width:auto}.wp-block-table.aligncenter td,.wp-block-table.aligncenter th,.wp-block-table.alignleft td,.wp-block-table.alignleft th,.wp-block-table.alignright td,.wp-block-table.alignright th{word-break:break-word}.wp-block-table .has-subtle-light-gray-background-color{background-color:#f3f4f5}.wp-block-table .has-subtle-pale-green-background-color{background-color:#e9fbe5}.wp-block-table .has-subtle-pale-blue-background-color{background-color:#e7f5fe}.wp-block-table .has-subtle-pale-pink-background-color{background-color:#fcf0ef}.wp-block-table.is-style-stripes{background-color:transparent;border-collapse:inherit;border-spacing:0}.wp-block-table.is-style-stripes tbody tr:nth-child(odd){background-color:#f0f0f0}.wp-block-table.is-style-stripes.has-subtle-light-gray-background-color tbody tr:nth-child(odd){background-color:#f3f4f5}.wp-block-table.is-style-stripes.has-subtle-pale-green-background-color tbody tr:nth-child(odd){background-color:#e9fbe5}.wp-block-table.is-style-stripes.has-subtle-pale-blue-background-color tbody tr:nth-child(odd){background-color:#e7f5fe}.wp-block-table.is-style-stripes.has-subtle-pale-pink-background-color tbody tr:nth-child(odd){background-color:#fcf0ef}.wp-block-table.is-style-stripes td,.wp-block-table.is-style-stripes th{border-color:transparent}.wp-block-table.is-style-stripes{border-bottom:1px solid #f0f0f0}.wp-block-table .has-border-color td,.wp-block-table .has-border-color th,.wp-block-table .has-border-color tr,.wp-block-table .has-border-color>*{border-color:inherit}.wp-block-table table[style*=border-top-color] tr:first-child,.wp-block-table table[style*=border-top-color] tr:first-child td,.wp-block-table table[style*=border-top-color] tr:first-child th,.wp-block-table table[style*=border-top-color]>*,.wp-block-table table[style*=border-top-color]>* td,.wp-block-table table[style*=border-top-color]>* th{border-top-color:inherit}.wp-block-table table[style*=border-top-color] tr:not(:first-child){border-top-color:currentColor}.wp-block-table table[style*=border-right-color] td:last-child,.wp-block-table table[style*=border-right-color] th,.wp-block-table table[style*=border-right-color] tr,.wp-block-table table[style*=border-right-color]>*{border-right-color:inherit}.wp-block-table table[style*=border-bottom-color] tr:last-child,.wp-block-table table[style*=border-bottom-color] tr:last-child td,.wp-block-table table[style*=border-bottom-color] tr:last-child th,.wp-block-table table[style*=border-bottom-color]>*,.wp-block-table table[style*=border-bottom-color]>* td,.wp-block-table table[style*=border-bottom-color]>* th{border-bottom-color:inherit}.wp-block-table table[style*=border-bottom-color] tr:not(:last-child){border-bottom-color:currentColor}.wp-block-table table[style*=border-left-color] td:first-child,.wp-block-table table[style*=border-left-color] th,.wp-block-table table[style*=border-left-color] tr,.wp-block-table table[style*=border-left-color]>*{border-left-color:inherit}.wp-block-table table[style*=border-style] td,.wp-block-table table[style*=border-style] th,.wp-block-table table[style*=border-style] tr,.wp-block-table table[style*=border-style]>*{border-style:inherit}.wp-block-table table[style*=border-width] td,.wp-block-table table[style*=border-width] th,.wp-block-table table[style*=border-width] tr,.wp-block-table table[style*=border-width]>*{border-style:inherit;border-width:inherit}
+/*# sourceURL=https://www.blender.org/wp-includes/blocks/table/style.min.css */
+</style>
+
+
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--primary: hsl(198deg 100% 46%);--wp--preset--color--features-io: hsl(207deg 17% 72%);--wp--preset--color--features-render: hsl(204deg 100% 50%);--wp--preset--color--features-paint: hsl(286deg 100% 76%);--wp--preset--color--features-geonodes: hsl(164deg 100% 63%);--wp--preset--color--features-assets: hsl(333deg 100% 50%);--wp--preset--color--features-modeling: hsl(101deg 100% 61%);--wp--preset--color--features-gpencil: hsl(271deg 73% 40%);--wp--preset--color--features-vse: hsl(60deg 100% 56%);--wp--preset--color--features-core: hsl(0deg 64% 56%);--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--gradient--blue-to-cyan: linear-gradient(15deg, rgb(0,110,255) 27%, hwb(194deg 50% 0%));--wp--preset--gradient--light-purple-to-light-blue: linear-gradient(45deg, rgb(255,80,255) 0%, rgb(58,255,255));--wp--preset--gradient--light-red-to-pink: linear-gradient(137deg, hsl(14deg 100% 58%) 0%, rgb(255 0 177));--wp--preset--gradient--yellow-to-orange: linear-gradient(45deg, rgb(255,255,33) 0%, rgb(255,197,0));--wp--preset--gradient--light-blue-to-light-green: linear-gradient(45deg, rgb(58,241,255) 0%, rgb(120,255,58));--wp--preset--gradient--light-orange-to-orange: linear-gradient(360deg, rgb(221,51,51) 0%, rgb(219,106,50));--wp--preset--gradient--subtle-cyan-to-blue: linear-gradient(350deg, hsl(227deg 100% 69%), hsl(206 90% 62%));--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: clamp(1.5rem, 5vw, 2rem);--wp--preset--spacing--40: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);--wp--preset--spacing--50: clamp(2.5rem, 8vw, 4.5rem);--wp--preset--spacing--60: clamp(3.75rem, 10vw, 7rem);--wp--preset--spacing--70: clamp(5rem, 5.25rem + ((1vw - 0.48rem) * 9.096), 8rem);--wp--preset--spacing--80: clamp(7rem, 14vw, 11rem);--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:where(body) { margin: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}.is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){margin-left: auto !important;margin-right: auto !important;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{border-radius: var(--border-radius-lg);padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}a:where(:not(.wp-element-button)){text-decoration: false;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-color{color: var(--wp--preset--color--primary) !important;}.has-features-io-color{color: var(--wp--preset--color--features-io) !important;}.has-features-render-color{color: var(--wp--preset--color--features-render) !important;}.has-features-paint-color{color: var(--wp--preset--color--features-paint) !important;}.has-features-geonodes-color{color: var(--wp--preset--color--features-geonodes) !important;}.has-features-assets-color{color: var(--wp--preset--color--features-assets) !important;}.has-features-modeling-color{color: var(--wp--preset--color--features-modeling) !important;}.has-features-gpencil-color{color: var(--wp--preset--color--features-gpencil) !important;}.has-features-vse-color{color: var(--wp--preset--color--features-vse) !important;}.has-features-core-color{color: var(--wp--preset--color--features-core) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-background-color{background-color: var(--wp--preset--color--primary) !important;}.has-features-io-background-color{background-color: var(--wp--preset--color--features-io) !important;}.has-features-render-background-color{background-color: var(--wp--preset--color--features-render) !important;}.has-features-paint-background-color{background-color: var(--wp--preset--color--features-paint) !important;}.has-features-geonodes-background-color{background-color: var(--wp--preset--color--features-geonodes) !important;}.has-features-assets-background-color{background-color: var(--wp--preset--color--features-assets) !important;}.has-features-modeling-background-color{background-color: var(--wp--preset--color--features-modeling) !important;}.has-features-gpencil-background-color{background-color: var(--wp--preset--color--features-gpencil) !important;}.has-features-vse-background-color{background-color: var(--wp--preset--color--features-vse) !important;}.has-features-core-background-color{background-color: var(--wp--preset--color--features-core) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-border-color{border-color: var(--wp--preset--color--primary) !important;}.has-features-io-border-color{border-color: var(--wp--preset--color--features-io) !important;}.has-features-render-border-color{border-color: var(--wp--preset--color--features-render) !important;}.has-features-paint-border-color{border-color: var(--wp--preset--color--features-paint) !important;}.has-features-geonodes-border-color{border-color: var(--wp--preset--color--features-geonodes) !important;}.has-features-assets-border-color{border-color: var(--wp--preset--color--features-assets) !important;}.has-features-modeling-border-color{border-color: var(--wp--preset--color--features-modeling) !important;}.has-features-gpencil-border-color{border-color: var(--wp--preset--color--features-gpencil) !important;}.has-features-vse-border-color{border-color: var(--wp--preset--color--features-vse) !important;}.has-features-core-border-color{border-color: var(--wp--preset--color--features-core) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-blue-to-cyan-gradient-background{background: var(--wp--preset--gradient--blue-to-cyan) !important;}.has-light-purple-to-light-blue-gradient-background{background: var(--wp--preset--gradient--light-purple-to-light-blue) !important;}.has-light-red-to-pink-gradient-background{background: var(--wp--preset--gradient--light-red-to-pink) !important;}.has-yellow-to-orange-gradient-background{background: var(--wp--preset--gradient--yellow-to-orange) !important;}.has-light-blue-to-light-green-gradient-background{background: var(--wp--preset--gradient--light-blue-to-light-green) !important;}.has-light-orange-to-orange-gradient-background{background: var(--wp--preset--gradient--light-orange-to-orange) !important;}.has-subtle-cyan-to-blue-gradient-background{background: var(--wp--preset--gradient--subtle-cyan-to-blue) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:root :where(.wp-block-separator){border-style: none;margin-top: var(--spacer-5);margin-bottom: var(--spacer-5);}
+/*# sourceURL=global-styles-inline-css */
+</style>
+
+<link rel="https://api.w.org/" href="https://www.blender.org/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://www.blender.org/wp-json/wp/v2/pages/96198" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.blender.org/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 7.1.4" />
+<link rel="canonical" href="https://www.blender.org/lab/mcp-server/" />
+<link rel='shortlink' href='https://www.blender.org/?p=96198' />
+	</head>
+
+	
+	<body class="type-page ps-mcp-server has-header">
+		
+		<div class="container-main">
+
+		
+				<nav class="navbar navbar-expand-md navbar-primary" role="navigation">
+			<div class="container">
+				<a class="navbar-brand navbar-logo-blender" href="/" title="blender.org homepage"></a>
+
+				<button class="navbar-mobile-toggler js-show-toggle" data-toggle-menu-id="navbar-mobile">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="navbar-toggler-icon"><i class="i-menu"></i></span>
+				</button>
+
+				<ul class="navbar-nav">
+<li class="nav-item ">
+<a href="https://www.blender.org/roadmap/" class="nav-link is-highlight">Roadmap</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/download/" title="Download" class="nav-link ">Download</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/support/" class="nav-link ">Support</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/get-involved/" class="nav-link ">Get Involved</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/about/" class="nav-link ">About</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/jobs/" class="nav-link is-highlight">Jobs</a>
+</li>
+<li class="nav-item ">
+<a href="https://store.blender.org/" class="nav-link ">Store</a>
+</li>
+<li class="nav-item ">
+<a href="https://fund.blender.org/?utm_medium=www-nav" title="Join the Development Fund" class="nav-link "><i class="i-heart"></i> Donate</a>
+</li>
+</ul>
+			</div>
+		</nav>
+		
+				
+  <nav class="navbar navbar-secondary" role="navigation">
+    <div class="container">
+      <ul class="navbar-nav">
+                    <li class="nav-item nav-parent">
+              <a class="nav-link" href="https://www.blender.org/lab/">
+                Blender Lab              </a>
+            </li>
+            <li class="nav-item nav-separator">
+              <i class="i-chevron-right"></i>
+            </li>
+        
+                    <li class="nav-item active">
+              <a class="nav-link" href="https://www.blender.org/lab/mcp-server/">
+                MCP Server              </a>
+            </li>
+              </ul>
+    </div>
+  </nav>
+
+  
+				<nav id="navbar-mobile" class="navbar-mobile">
+			<ul class="navbar-nav">
+<li class="nav-item ">
+<a href="https://www.blender.org/roadmap/" class="nav-link is-highlight">Roadmap</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/download/" title="Download" class="nav-link ">Download</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/support/" class="nav-link ">Support</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/get-involved/" class="nav-link ">Get Involved</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/about/" class="nav-link ">About</a>
+</li>
+<li class="nav-item ">
+<a href="https://www.blender.org/jobs/" class="nav-link is-highlight">Jobs</a>
+</li>
+<li class="nav-item ">
+<a href="https://store.blender.org/" class="nav-link ">Store</a>
+</li>
+<li class="nav-item ">
+<a href="https://fund.blender.org/?utm_medium=www-nav" title="Join the Development Fund" class="nav-link "><i class="i-heart"></i> Donate</a>
+</li>
+</ul>
+
+						
+  <nav class="navbar navbar-secondary" role="navigation">
+    <div class="container">
+      <ul class="navbar-nav">
+                    <li class="nav-item nav-parent">
+              <a class="nav-link" href="https://www.blender.org/lab/">
+                Blender Lab              </a>
+            </li>
+            <li class="nav-item nav-separator">
+              <i class="i-chevron-right"></i>
+            </li>
+        
+                    <li class="nav-item active">
+              <a class="nav-link" href="https://www.blender.org/lab/mcp-server/">
+                MCP Server              </a>
+            </li>
+              </ul>
+    </div>
+  </nav>
+
+  		</nav>
+
+	
+
+<div class="page-header header-align-x-left">
+	<h1 class="font-size-title">
+		  MCP Server	</h1>
+</div>
+
+
+
+
+<div class="container">
+			<article id="post-96198" class="post-96198 page type-page status-publish hentry">
+			<div class="entry-content">
+				
+<div class="wp-block-group is-style-box is-layout-constrained wp-block-group-is-layout-constrained">
+<p class="wp-block-paragraph">A lightweight MCP (Model Context Protocol) server for Blender. It offers a natural language interface with Blender&#8217;s Python API, improving access to documentation, and allowing users to explore and understand complex setups.</p>
+
+
+
+<p class="wp-block-paragraph">For technical details and documentation about the architecture check the <a href="https://projects.blender.org/lab/blender_mcp">source code</a>.</p>
+
+
+
+<div class="wp-block-group alert alert-warning is-layout-constrained wp-block-group-is-layout-constrained" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:0;padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30)">
+<p class="wp-block-paragraph"><strong>Security Warning</strong><br>The MCP server will execute LLM generated code in Blender without any guards in place to protect your data from removal or being sent to a remote location. To keep your data safe it is recommended to use a virtual machine, or a system without access to sensitive information.</p>
+</div>
+</div>
+
+
+
+<div class="wp-block-group is-style-box is-layout-constrained wp-block-group-is-layout-constrained" style="margin-top:var(--wp--preset--spacing--30)">
+<h2 class="wp-block-heading">Installation</h2>
+
+
+
+<p class="wp-block-paragraph"><strong>Blender does not have any built-in functionality for connecting to LLMs.</strong></p>
+
+
+
+<p class="wp-block-paragraph">In order for Blender to connect with LLMs, <strong>three external tools must be manually downloaded, installed, and run</strong>.</p>
+
+
+
+<div class="wp-block-group is-style-default is-layout-constrained wp-block-group-is-layout-constrained" style="margin-top:var(--wp--preset--spacing--30)">
+<p class="wp-block-paragraph">Requirements:</p>
+
+
+
+<ol class="wp-block-list">
+<li><a href="https://www.blender.org/download/">Blender 5.1</a> or newer</li>
+
+
+
+<li><a href="#addon" data-type="internal" data-id="#addon">Add-on</a></li>
+
+
+
+<li><a href="#llm-client" data-type="internal" data-id="#llm_client">LLM Client</a></li>
+
+
+
+<li><a href="#mcp-server" data-type="internal" data-id="#mcp-server">MCP Server</a></li>
+</ol>
+</div>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30)"/>
+
+
+
+<h3 id="addon" class="wp-block-heading">Add-on</h3>
+
+
+
+<p class="wp-block-paragraph">In order to interact with your Blender session you need to install a specific add-on for the MCP Server integration.</p>
+
+
+
+<style>
+.btn.btn-install-drag {
+  transform: initial;
+  outline: .2rem dashed currentColor;
+  outline-offset: -.2rem;
+}
+</style>
+<a href="https://projects.blender.org/lab/blender_mcp/releases/download/v1.0.3/mcp-1.0.3.zip?repository=https%3A%2F%2Flab.blender.org%2F&amp;blender_version_min=5.1.0" class="btn btn-flex btn-primary btn-install-drag cursor-move mb-2 px-4" draggable="true">
+  <i class="i-move"></i>
+  <span>Drag and Drop into Blender</span>
+</a>
+
+
+
+<p class="wp-block-paragraph">…or <a href="https://projects.blender.org/lab/blender_mcp/releases/download/v1.0.3/mcp-1.0.3.zip?repository=https%3A%2F%2Flab.blender.org%2F&amp;blender_version_min=5.1.0" data-type="link" data-id="https://projects.blender.org/lab/blender_mcp/releases/download/v0.1.0/mcp-0.1.0.zip?repository=https%3A%2F%2Flab.blender.org%2F&amp;blender_version_min=5.1.0">download</a> and <a href="https://docs.blender.org/manual/en/latest/editors/preferences/extensions.html#install" data-type="link" data-id="https://docs.blender.org/manual/en/dev/editors/preferences/extensions.html#install">Install from Disk</a></p>
+
+
+
+<p class="wp-block-paragraph">If you drag &amp; drop into Blender <strong>you will need to do it twice</strong>. First to add the Blender Lab repository, secondly to install the add-on itself. This method allows you to receive update notifications whenever a new version of this add-on is available.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30)"/>
+
+
+
+<h3 id="llm-client" class="wp-block-heading">LLM Client</h3>
+
+
+
+<p class="wp-block-paragraph">MCP Servers follow a well defined standard and are compatible with a myriad of clients. Please follow the&nbsp;<a href="https://projects.blender.org/lab/blender_mcp/wiki/Llama.cpp" target="_blank" rel="noreferrer noopener">LLama.cpp</a>&nbsp;documentation, or install a LLM client of your preference.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30)"/>
+
+
+
+<h3 id="mcp-server" class="wp-block-heading">MCP Server</h3>
+
+
+
+<p class="wp-block-paragraph">There are different ways to install the MCP Server depending on your LLM client capabilities.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>MCP Bundle</strong>: For newer clients that support <code>.mcpb</code> files, download the <a href="https://projects.blender.org/lab/blender_mcp/releases" target="_blank" rel="noreferrer noopener">latest package</a> from the release page. <em>Llama.cpp doesn&#8217;t support this yet.</em></li>
+
+
+
+<li><strong>MCP Server</strong>: To install from the source code check the <a href="https://projects.blender.org/lab/blender_mcp/wiki/Llama.cpp#mcp-server-installation">Llama.cpp documentation</a> or the <a href="https://projects.blender.org/lab/blender_mcp/wiki/Setup" data-type="link" data-id="https://projects.blender.org/lab/blender_mcp/wiki/Setup" target="_blank" rel="noreferrer noopener">setup instructions</a>.</li>
+</ul>
+</div>
+
+
+
+<div class="wp-block-group is-style-box is-layout-constrained wp-block-group-is-layout-constrained" style="margin-top:var(--wp--preset--spacing--30)">
+<h2 id="user-content-running" class="wp-block-heading">Running</h2>
+
+
+
+<p class="wp-block-paragraph">Once if you have your MCP Server setup within your LLM Client, you can start to explore your Blender scenes.</p>
+
+
+
+<figure data-wp-context="{&quot;imageId&quot;:&quot;6ae9f306bb2fa&quot;}" data-wp-interactive="core/image" data-wp-key="6ae9f306bb2fa" class="wp-block-image size-large wp-lightbox-container"><img fetchpriority="high" decoding="async" width="1280" height="514" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on--pointerdown="actions.preloadImage" data-wp-on--pointerenter="actions.preloadImageWithDelay" data-wp-on--pointerleave="actions.cancelPreload" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-1280x514.webp" alt="" class="wp-image-96237" srcset="https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-1280x514.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-512x206.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-768x308.webp 768w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-1536x617.webp 1536w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-2048x822.webp 2048w" sizes="(max-width: 1280px) 100vw, 1280px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			data-wp-bind--aria-label="state.thisImage.triggerButtonAriaLabel"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.thisImage.buttonRight"
+			data-wp-style--top="state.thisImage.buttonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">llama.cpp web interface running the blender-mcp server.</figcaption></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30)"/>
+
+
+
+<h3 class="wp-block-heading">Example 1: Scene Analysis</h3>
+
+
+
+<p class="wp-block-paragraph">MCP can be used to programatically analyze the scene for performance bottomnecks. Take for instance the <a href="https://download.blender.org/demo/test/classroom.zip">Classroom demo file</a>:</p>
+
+
+
+<figure data-wp-context="{&quot;imageId&quot;:&quot;6ae9f306bb957&quot;}" data-wp-interactive="core/image" data-wp-key="6ae9f306bb957" class="wp-block-image size-large wp-lightbox-container"><img decoding="async" width="1280" height="575" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on--pointerdown="actions.preloadImage" data-wp-on--pointerenter="actions.preloadImageWithDelay" data-wp-on--pointerleave="actions.cancelPreload" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.blender.org/wp-content/uploads/2026/03/classroom-1280x575.webp" alt="" class="wp-image-96243" srcset="https://www.blender.org/wp-content/uploads/2026/03/classroom-1280x575.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/classroom-512x230.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/classroom-768x345.webp 768w, https://www.blender.org/wp-content/uploads/2026/03/classroom-1536x690.webp 1536w, https://www.blender.org/wp-content/uploads/2026/03/classroom-2048x920.webp 2048w" sizes="(max-width: 1280px) 100vw, 1280px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			data-wp-bind--aria-label="state.thisImage.triggerButtonAriaLabel"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.thisImage.buttonRight"
+			data-wp-style--top="state.thisImage.buttonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">Classroom demo file.</figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">This scene is one of the <a href="https://opendata.blender.org/">Blender benchmark</a> files. The reason those files are in the benchmark is because they are a good representation of real production files created by artists. And it is no surprise that it can contain objects prone to be optimized.</p>
+
+
+
+<p class="wp-block-paragraph">While checking for polygon count is often enough, even more interesting is to plot the number of polygons based on how big they show on the final render. This can be obtained with the following prompt.</p>
+
+
+
+<p class="wp-block-paragraph"><code>Analyze the scene and list the outliers: objects with highest polygon count but smaller size from the camera point of view.</code></p>
+
+
+
+<p class="wp-block-paragraph">The plotted resulting data shows clearly two objects which stand out from the rest: <code>alphabet</code> and <code>coat 1</code>:</p>
+
+
+
+<figure data-wp-context="{&quot;imageId&quot;:&quot;6ae9f306bbf6b&quot;}" data-wp-interactive="core/image" data-wp-key="6ae9f306bbf6b" class="wp-block-image size-full is-resized has-custom-border is-style-default wp-lightbox-container"><img decoding="async" width="1194" height="736" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on--pointerdown="actions.preloadImage" data-wp-on--pointerenter="actions.preloadImageWithDelay" data-wp-on--pointerleave="actions.cancelPreload" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.blender.org/wp-content/uploads/2026/03/outlier.webp" alt="Graph analysis of the polycount per screen area" class="wp-image-96242" style="border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;aspect-ratio:1.622317049869435;width:713px;height:auto" srcset="https://www.blender.org/wp-content/uploads/2026/03/outlier.webp 1194w, https://www.blender.org/wp-content/uploads/2026/03/outlier-512x316.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/outlier-768x473.webp 768w" sizes="(max-width: 1194px) 100vw, 1194px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			data-wp-bind--aria-label="state.thisImage.triggerButtonAriaLabel"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.thisImage.buttonRight"
+			data-wp-style--top="state.thisImage.buttonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">Graph analysis of the polycount per screen area for the classroom demo scene.</figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">The <code>alphabet</code> object has 20k polygons. Because of its flat disposition it could be replaced by a texture with little downside to the final result. The <code>coat 1</code> object has 37k polygons due to its Subsurf modifier. Lowering the subdivision level could alleviate the scene, if memory was the bottleneck in your system. </p>
+
+
+
+<figure data-wp-context="{&quot;imageId&quot;:&quot;6ae9f306bc4fb&quot;}" data-wp-interactive="core/image" data-wp-key="6ae9f306bc4fb" class="wp-block-image size-large wp-lightbox-container"><img loading="lazy" decoding="async" width="1280" height="575" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on--pointerdown="actions.preloadImage" data-wp-on--pointerenter="actions.preloadImageWithDelay" data-wp-on--pointerleave="actions.cancelPreload" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.blender.org/wp-content/uploads/2026/03/outlier-1-1280x575.webp" alt="" class="wp-image-96244" srcset="https://www.blender.org/wp-content/uploads/2026/03/outlier-1-1280x575.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-512x230.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-768x345.webp 768w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-1536x690.webp 1536w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-2048x920.webp 2048w" sizes="auto, (max-width: 1280px) 100vw, 1280px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			data-wp-bind--aria-label="state.thisImage.triggerButtonAriaLabel"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.thisImage.buttonRight"
+			data-wp-style--top="state.thisImage.buttonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">The alphabet sits at the back of the scene and could easily be replaced by a texture. The coat is also far enough that could have its mesh simplified.</figcaption></figure>
+
+
+
+<div class="wp-block-group alert alert-info is-layout-constrained wp-block-group-is-layout-constrained" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30);padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30)">
+<p class="wp-block-paragraph"><strong>How reliable are those results?</strong></p>
+
+
+
+<p class="wp-block-paragraph">The initial analysis returned by the LLM only considered the modifiers which influenced the viewport. The <code>coat 1</code> object has a Solidify modifier which doubles its poly count, making it an even more outlier. And although this scene had no Simplify enabled, this settings would have also affected the final analysis.</p>
+</div>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30)"/>
+
+
+
+<h3 class="wp-block-heading">Example 2: Various Prompts</h3>
+
+
+
+<p class="wp-block-paragraph">Those are some of the other tested use cases. You will need to paste the entire &#8220;Prompt&#8221; content for them to work. As a start point you should use the corresponding demo file. The sucess of the operation will depend on the model used.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>Use Case</th><th>Prompt</th><th>Demo File</th><th>Result</th></tr></thead><tbody><tr><td>Data-block renaming: fix typos</td><td><code>With the current open Blender file fix the name of all the data-blocks to remove typos. Report back which data-blocks got fixed.</code></td><td><a href="https://www.blender.org/download/demo/geometry-nodes/fields/pebble_scattering.blend">Scattering Pebbles</a></td><td>GRP-rocks → GRP-pebble, LGT-Lights → LGT-lights, Compositing Nodetree → Compositing Node Tree</td></tr><tr><td>Data-block renaming: better names</td><td><code>With the current open Blender file suggest descriptive names for all data-blocks, and apply if approved.</code></td><td><a href="https://www.blender.org/download/demo/geometry-nodes/fields/pebble_scattering.blend">Scattering Pebbles</a></td><td>Camera → CAM-main, Area → LGT-sun-key, Area.001 → LGT-sun-fill, Area.002 → LGT-area-rim, GEO-pebble.001 → GEO-pebble-B, …</td></tr><tr><td>Querying data relations using natural language</td><td><code>Which objects are using the following material: pebbles</code></td><td><a href="https://www.blender.org/download/demo/geometry-nodes/fields/pebble_scattering.blend">Scattering Pebbles</a></td><td>7 objects: GEO-pebble, GEO-pebble.001, GEO-pebble.002, GEO-pebble.003, GEO-pebble.004, GEO-pebble.005, GEO-pebble.006</td></tr><tr><td>Scene debugging</td><td><code>What is the object with the highest poly-count on this file? Ignore objects which are not linked to any scene.</code></td><td><a href="https://www.blender.org/download/demo/geometry-nodes/fields/pebble_scattering.blend">Scattering Pebbles</a></td><td>GEO-ground with 4,096 faces.</td></tr><tr><td>Geometry Nodes Documentation</td><td><code>With the current open Blender file explain what the main geometry nodes setup is doing. Add inline documentation for it with frame elements. Create a Text data-block with the result of analysis.</code></td><td><a href="https://www.blender.org/download/demo/geometry-nodes/fields/pebble_scattering.blend">Scattering Pebbles</a></td><td>4 major color-coded frames + text file with explanation.</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph">Other prompts yet to be explored:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Translate all the data-blocks from French to English.</li>
+
+
+
+<li>My mesh is not being deformed by my armature, how can I fix that?</li>
+
+
+
+<li>Blender is running out of memory rendering this scene, how can I optimize it?</li>
+
+
+
+<li>This mesh has strange shading artifacts, how can I you fix that?</li>
+
+
+
+<li>Find objects that have meshes with bad normals.</li>
+
+
+
+<li>Check my scene for non-uniformally transformed mesh objects.</li>
+
+
+
+<li>The video I exported doesn&#8217;t play in my web browsers, which settings should I change?</li>
+
+
+
+<li>Which sculpt brushes should I use for creating and detailing tree branches?</li>
+
+
+
+<li>Set up compositing nodes to save my image both as SDR and HDR.</li>
+
+
+
+<li>Verify this checklist:: meshes must be manifold, all objects must have materials, naming must follow convention, no absolute paths, …</li>
+</ul>
+
+
+
+<details class="wp-block-details is-layout-flow wp-block-details-is-layout-flow"><summary>Data-block renaming: fix typos</summary>
+<p class="wp-block-paragraph"><code>GRP-rocks</code> → <code>GRP-pebbles</code> (the scene contains only pebble objects, not rocks).</p>
+
+
+
+<p class="wp-block-paragraph"><code>LGT-Lights</code> → <code>LGT-lights</code> (inconsistent casing).</p>
+
+
+
+<p class="wp-block-paragraph"><code>Compositing Nodetree</code> → <code>Compositing Node Tree</code> (Nodetree is a compound word error).</p>
+</details>
+
+
+
+<details class="wp-block-details is-layout-flow wp-block-details-is-layout-flow"><summary>Data-block renaming: better names</summary>
+<p class="wp-block-paragraph"><strong>Objects</strong>:</p>
+
+
+
+<ul class="wp-block-list">
+<li><code>Camera</code> → <code>CAM-main</code></li>
+
+
+
+<li><code>Area</code> → <code>LGT-sun-key</code></li>
+
+
+
+<li><code>Area.001</code> → <code>LGT-sun-fill</code></li>
+
+
+
+<li><code>Area.002</code> → <code>LGT-area-rim</code></li>
+
+
+
+<li><code>GEO-pebble.001</code> → <code>GEO-pebble-B</code></li>
+
+
+
+<li><code>GEO-pebble.002</code> → <code>GEO-pebble-C</code></li>
+
+
+
+<li><code>GEO-pebble.003</code> → <code>GEO-pebble-D</code></li>
+
+
+
+<li><code>GEO-pebble.004</code> → <code>GEO-pebble-E</code></li>
+
+
+
+<li><code>GEO-pebble.005</code> → <code>GEO-pebble-F</code></li>
+
+
+
+<li><code>GEO-pebble.006</code> → <code>GEO-pebble-G</code></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Light Data-Blocks</strong>:</p>
+
+
+
+<ul class="wp-block-list">
+<li><code>Area</code> → <code>LGT-sun-key</code></li>
+
+
+
+<li><code>Area.001</code> → <code>LGT-sun-fill</code></li>
+
+
+
+<li><code>Area.002</code> → <code>LGT-area-rim</code></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Camera Data-Block</strong>:</p>
+
+
+
+<ul class="wp-block-list">
+<li><code>Camera</code> → <code>CAM-main</code></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Textures</strong>:</p>
+
+
+
+<ul class="wp-block-list">
+<li><code>Texture</code> → <code>TEX-ground-clouds</code></li>
+
+
+
+<li><code>Texture.001</code> → <code>TEX-ground-image</code></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>Scene &amp; World</strong>:</p>
+
+
+
+<ul class="wp-block-list">
+<li><code>World</code> → <code>WLD-environment</code></li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><code>Scene</code> → <code>SCN-main</code></li>
+</ul>
+</details>
+
+
+
+<details class="wp-block-details is-layout-flow wp-block-details-is-layout-flow"><summary>Geometry Nodes Documentation</summary>
+<p class="wp-block-paragraph"><strong>New Frames created</strong>:</p>
+
+
+
+<figure data-wp-context="{&quot;imageId&quot;:&quot;6ae9f306bcfc9&quot;}" data-wp-interactive="core/image" data-wp-key="6ae9f306bcfc9" class="wp-block-image size-large wp-lightbox-container"><img decoding="async" width="1280" height="927" fetchpriority="low" data-wp-class--hide="state.isContentHidden" data-wp-class--show="state.isContentVisible" data-wp-init="callbacks.setButtonStyles" data-wp-on--click="actions.showLightbox" data-wp-on--load="callbacks.setButtonStyles" data-wp-on--pointerdown="actions.preloadImage" data-wp-on--pointerenter="actions.preloadImageWithDelay" data-wp-on--pointerleave="actions.cancelPreload" data-wp-on-window--resize="callbacks.setButtonStyles" src="https://www.blender.org/wp-content/uploads/2026/03/labs-frames-1280x927.webp" alt="Documentation frames added to the geometry nodes setup." class="wp-image-96217" srcset="https://www.blender.org/wp-content/uploads/2026/03/labs-frames-1280x927.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/labs-frames-512x371.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/labs-frames-768x556.webp 768w, https://www.blender.org/wp-content/uploads/2026/03/labs-frames.webp 1398w" sizes="(max-width: 1280px) 100vw, 1280px" /><button
+			class="lightbox-trigger"
+			type="button"
+			aria-haspopup="dialog"
+			data-wp-bind--aria-label="state.thisImage.triggerButtonAriaLabel"
+			data-wp-init="callbacks.initTriggerButton"
+			data-wp-on--click="actions.showLightbox"
+			data-wp-style--right="state.thisImage.buttonRight"
+			data-wp-style--top="state.thisImage.buttonTop"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+				<path fill="#fff" d="M2 0a2 2 0 0 0-2 2v2h1.5V2a.5.5 0 0 1 .5-.5h2V0H2Zm2 10.5H2a.5.5 0 0 1-.5-.5V8H0v2a2 2 0 0 0 2 2h2v-1.5ZM8 12v-1.5h2a.5.5 0 0 0 .5-.5V8H12v2a2 2 0 0 1-2 2H8Zm2-12a2 2 0 0 1 2 2v2h-1.5V2a.5.5 0 0 0-.5-.5H8V0h2Z" />
+			</svg>
+		</button><figcaption class="wp-element-caption">Documentation frames added to the geometry nodes setup.</figcaption></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>Text Data-block</strong>:</p>
+
+
+
+<pre class="wp-block-code"><code>GEOMETRY NODES ANALYSIS -- "Pebble Scattering Nodes"
+Applied to object: GEO-ground   |   Modifier: Pebbles
+========================================================
+
+OVERVIEW
+--------
+This node group scatters three size categories of pebble meshes across
+the faces of a ground mesh.  Each category uses its own density mask
+and a global Factor multiplier so that coverage can be art-directed
+per-layer without touching the raw mask textures.  The three resulting
+instance layers are merged with the original ground geometry and sent
+to the Group Output.
+
+INPUTS (Group Interface)
+------------------------
+  Geometry           -- The ground mesh to scatter pebbles on.
+  Large Pebbles Mask -- Float mask (e.g. vertex colour / texture) that
+                       defines WHERE large pebbles may appear.
+  Medium Pebbles Mask-- Float mask for medium pebble placement regions.
+  Small Pebbles Mask -- Float mask for small pebble placement regions.
+  Factor             -- Global density multiplier shared by all three
+                       lanes (appears three times in the interface,
+                       one per lane).
+
+NODE GRAPH -- LANE BY LANE
+--------------------------
+
++- LARGE PEBBLES LANE -----------------------------------------------------+
+|  Source object : GEO-pebble                                              |
+|  Group Input.001                                                         |
+|    +- Geometry ------------------------&gt; Distribute Points on Faces      |
+|    +- Large Pebbles Mask ------------&gt; Distribute Points on Faces        |
+|    |                                     (Density Factor socket)         |
+|    +- Factor --&gt; Math.003 (x)  -------&gt; Distribute Points on Faces       |
+|                                          (Density Max socket)            |
+|  Distribute Points on Faces ----------&gt; Instance on Points               |
+|  Object Info (GEO-pebble) -----------&gt; Instance on Points (Instance)     |
+|  Random Rotation.001 &#91;-pi, +pi] -----&gt; Instance on Points (Rotation)     |
+|  Random Value &#91;0.25 - 0.60]   -------&gt; Instance on Points (Scale)        |
+|  Instance on Points ------------------&gt; Join Geometry.003                |
++--------------------------------------------------------------------------+
+
++- MEDIUM PEBBLES LANE ----------------------------------------------------+
+|  Source object : GEO-pebble.004                                          |
+|  Group Input.002                                                         |
+|    +- Geometry ------------------------&gt; Distribute Points on Faces.001  |
+|    +- Medium Pebbles Mask -----------&gt; Math.004 (x) --&gt; Math.005 (x)     |
+|    +- Factor ------------------------&gt; Math.005 (x)                      |
+|         Math.005 output --------------&gt; Distribute Points on Faces.001   |
+|                                          (Density socket)                |
+|  Distribute Points on Faces.001 -----&gt; Instance on Points.001            |
+|  Object Info.001 (GEO-pebble.004) --&gt; Instance on Points.001             |
+|  Random Rotation.002 &#91;-pi, +pi]  ----&gt; Instance on Points.001            |
+|  Random Value.002 &#91;0.25 - 0.45] -----&gt; Instance on Points.001            |
+|  Instance on Points.001 -------------&gt; Join Geometry.003                 |
++--------------------------------------------------------------------------+
+
++- SMALL PEBBLES LANE -----------------------------------------------------+
+|  Source object : GEO-pebble.002                                          |
+|  Group Input.003                                                         |
+|    +- Geometry ------------------------&gt; Distribute Points on Faces.002  |
+|    +- Small Pebbles Mask -----------&gt; Math.006 (x) --&gt; Math.007 (x)      |
+|    +- Factor ------------------------&gt; Math.006 (x)                      |
+|         Math.007 output --------------&gt; Distribute Points on Faces.002   |
+|                                          (Density socket)                |
+|  Distribute Points on Faces.002 -----&gt; Instance on Points.002            |
+|  Object Info.002 (GEO-pebble.002) --&gt; Instance on Points.002             |
+|  Random Rotation &#91;-pi, +pi]      ----&gt; Instance on Points.002            |
+|  Random Value.003 &#91;0.10 - 0.35] -----&gt; Instance on Points.002            |
+|  Instance on Points.002 -------------&gt; Join Geometry.003                 |
++--------------------------------------------------------------------------+
+
++- MERGE &amp; OUTPUT ---------------------------------------------------------+
+|  Group Input.004                                                         |
+|    +- Geometry (pass-through) --------&gt; Join Geometry.003                |
+|  Join Geometry.003                                                       |
+|    (inputs: large instances + medium instances +                         |
+|             small instances  + original ground geo)                      |
+|    +- Geometry -----------------------&gt; Group Output                     |
++--------------------------------------------------------------------------+
+
+SCALE RANGES (uniform, per lane)
+---------------------------------
+  Large  pebbles : 0.25 - 0.60
+  Medium pebbles : 0.25 - 0.45
+  Small  pebbles : 0.10 - 0.35
+
+ROTATION (all lanes)
+---------------------
+  All three axes randomised independently over &#91;-pi, +pi],
+  giving each pebble instance a fully random orientation.
+
+DENSITY CONTROL PATTERN (Medium &amp; Small lanes)
+-----------------------------------------------
+  The mask value and the Factor are first multiplied together
+  (Math.004 / Math.006), then that product is multiplied again
+  by a second value (Math.005 / Math.007) before being fed into
+  the Density socket.  This two-stage multiply gives a non-linear
+  response curve, making the density fall off more aggressively
+  near the mask edges.
+
+  The Large lane uses a different (single-stage) approach:
+  the Density Factor socket receives the mask directly, and the
+  Factor is only used to scale Density Max via Math.003.
+
+NOTES &amp; SUGGESTIONS
+--------------------
+  * The node group has no Seed input exposed; adding one would allow
+    re-randomising all three layers simultaneously without touching
+    individual nodes.
+  * The Factor input currently appears three times (once per lane).
+    Merging them into a single shared socket would simplify the
+    modifier panel.
+  * Consider labelling the unlabelled Math nodes (Math.003-.007)
+    and Random Value nodes to aid future maintenance.</code></pre>
+</details>
+</div>
+			</div>
+		</article>
+	</div>
+
+		</div> <!-- main container -->
+
+		<!-- @build Blender Web Assets v2.2.10 - Do not remove comment -->
+<div class="footer-navigation">
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-2">
+        <section>
+          <a href="https://www.blender.org/about/" class="sitemap-title">
+            About
+          </a>
+          <ul>
+            <li>
+              <a href="https://www.blender.org/about/foundation/" title="Blender Foundation">
+                Blender Foundation
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/about/institute/" title="Blender Institute">
+                Blender Institute
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/about/studio/" title="Blender Studio">
+                Blender Studio
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/about/license/" title="License">
+                License
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/about/logo/" title="Logo & Trademark">
+                Logo & Trademark
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/about/credits/" title="Credits">
+                Credits
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/privacy-policy/" title="Privacy Policy">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="https://developer.blender.org/docs/handbook/communication/code_of_conduct/" title="Code of Conduct">
+                Code of Conduct
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="sitemap-title">
+            Organization
+          </div>
+          <ul>
+            <li>
+              <a href="https://www.blender.org/about/people/" title="People">
+                People
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/jobs/" title="Jobs">
+                Jobs
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <a href="https://network.blender.org/" title="Blender Network" class="sitemap-title">
+          Blender Network
+        </a>
+      </div>
+
+      <div class="col-6 col-md-2">
+        <section>
+          <a href="https://www.blender.org/download/" class="sitemap-title">
+            Download
+          </a>
+          <ul>
+            <li>
+              <a href="https://www.blender.org/download/" title="Download Blender">
+                Latest Blender
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/download/lts/" title="Blender Long-term Support">
+                Blender LTS
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/download/previous-versions/" title="Previous Versions">
+                Previous Versions
+              </a>
+            </li>
+            <li>
+              <a href="https://builder.blender.org/download/daily/?utm_medium=www-footer" title="Experimental Builds">
+                Experimental Builds
+              </a>
+            </li>
+            <li>
+              <a href="https://projects.blender.org/blender/blender?utm_medium=www-footer" title="Source Code">
+                Source Code
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/download/requirements/" title="Requirements">
+                Requirements
+              </a>
+            </li>
+            <li>
+              <a href="https://opendata.blender.org/?utm_medium=www-footer" title="Blender Benchmark">
+                Benchmark
+              </a>
+            </li>
+            <li>
+              <a href="https://flamenco.blender.org/?utm_medium=www-footer" title="Flamenco">
+                Flamenco
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <a href="https://extensions.blender.org/?utm_medium=www-footer" title="Add-ons, themes, and other extensions"
+            class="sitemap-title">
+            Extensions
+          </a>
+          <ul>
+            <li>
+              <a href="https://extensions.blender.org/add-ons/?utm_medium=www-footer" title="Add-ons">
+                Add-ons
+              </a>
+            </li>
+            <li>
+              <a href="https://extensions.blender.org/themes/?utm_medium=www-footer"
+                title="Themes">
+                Themes
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="col-6 col-md-2">
+        <section>
+          <a href="https://developer.blender.org/?utm_medium=www-footer" class="sitemap-title">
+            Developers
+          </a>
+          <ul>
+            <li>
+              <a href="https://developer.blender.org/?utm_medium=www-footer" title="Get Started">
+                Get Started
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/roadmap/?utm_medium=www-footer" title="Roadmap">
+                Roadmap
+              </a>
+            </li>
+            <li>
+              <a href="https://projects.blender.org/?utm_medium=www-footer" title="Projects">
+                Projects
+              </a>
+            </li>
+            <li>
+              <a href="https://developer.blender.org/docs/?utm_medium=www-footer" title="Developers Docs">
+                Docs
+              </a>
+            </li>
+            <li>
+              <a href="https://code.blender.org/?utm_medium=www-footer" title="Developers Blog">
+                Blog
+              </a>
+            </li>
+            <li>
+              <a href="https://devtalk.blender.org/?utm_medium=www-footer" title="Developers Forum">
+                Forum
+              </a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/blenderdevelopers" target="_blank" title="YouTube (Developers)">
+                YouTube
+              </a>
+            </li>
+            <li>
+              <a href="https://docs.blender.org/api/current/?utm_medium=www-footer" title="Python API">
+                Python API
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <a href="https://studio.blender.org/?utm_medium=www-footer" title="Blender Studio" class="sitemap-title">
+            Blender Studio
+          </a>
+          <ul>
+            <li>
+              <a href="https://studio.blender.org/films/?utm_medium=www-footer" title="Blender Studio Films">
+                Films
+              </a>
+            </li>
+            <li>
+              <a href="https://studio.blender.org/training/?utm_medium=www-footer" title="Blender Studio Training">
+                Training
+              </a>
+            </li>
+            <li>
+              <a href="https://studio.blender.org/tools/?utm_medium=www-footer" title="Blender Studio Tools">
+                Tools & Pipeline
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="col-6 col-md-2">
+        <section>
+          <a href="https://www.blender.org/support/" class="sitemap-title">
+            Support
+          </a>
+          <ul>
+            <li>
+              <a href="https://docs.blender.org/manual/?utm_medium=www-footer" title="Manual">
+                Manual
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/community/" title="Community">
+                Community
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/support/faq/" title="FAQ">
+                FAQ
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <a href="https://www.blender.org/get-involved/" class="sitemap-title">
+            Get Involved
+          </a>
+          <ul>
+            <li>
+              <a href="https://www.blender.org/get-involved/documenters/" title="Documentation">
+                Documentation
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/get-involved/" title="Education">
+                Education
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <a href="https://www.blender.org/news/" title="News" class="sitemap-title">
+            News
+          </a>
+          <ul>
+            <li>
+              <a href="https://www.blender.org/category/press/" title="Press Releases">
+                Press Releases
+              </a>
+            </li>
+            <li>
+              <a href="https://www.blender.org/get-involved/user-stories/" title="User Stories">
+                User Stories
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <a href="https://conference.blender.org/" title="Blender Conference" class="sitemap-title">
+          Blender Conference
+        </a>
+      </div>
+
+      <div class="col-6 col-md-3 social">
+        <section>
+          <a href="https://bsky.app/profile/blender.org" class="sitemap-title">
+            Follow Blender
+          </a>
+          <ul class="list-inline mb-4 social-icons">
+            <li>
+              <a href="https://youtube.com/BlenderFoundation" title="Blender's Official YouTube channel" target="_blank"
+                class="social-icons__youtube">
+                <i class="i-youtube"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://video.blender.org/" title="Blender's PeerTube instance" target="_blank"
+                class="social-icons__peertube">
+                <i class="i-peertube"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://bsky.app/profile/blender.org" title="Follow Blender on Bluesky" target="_blank"
+                class="social-icons__bluesky">
+                <i class="i-bluesky"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://instagram.com/blender.official/" title="Follow Blender on Instagram" target="_blank"
+                class="social-icons__instagram">
+                <i class="i-instagram"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/YourOwn3DSoftware/" title="Follow Blender on Facebook" target="_blank"
+                class="social-icons__facebook">
+                <i class="i-facebook"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/company/blender-org/" title="Follow Blender on LinkedIn" target="_blank"
+                class="social-icons__linkedin">
+                <i class="i-linkedin"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://mastodon.social/@blender" title="Follow Blender on Mastodon" target="_blank"
+                class="social-icons__mastodon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.4144 232.00976">
+                  <path
+                    d="M 107.87112,1.8691521 C 78.687821,2.1077446 50.615693,5.2679473 34.256124,12.781149 c 0,0 -32.4459422,14.513545 -32.4459422,64.032543 0,11.33929 -0.220399,24.897358 0.1387195,39.275628 1.1782038,48.42688 8.8777977,96.15389 53.6520047,108.00481 20.644395,5.46425 38.369975,6.60907 52.644934,5.82442 25.88728,-1.43526 40.41961,-9.23836 40.41961,-9.23836 l -0.85394,-18.78298 c 0,0 -18.49963,5.83267 -39.27562,5.12182 -20.58413,-0.70594 -42.314881,-2.21933 -45.644106,-27.49168 -0.307465,-2.2199 -0.461196,-4.59439 -0.461196,-7.0873 0,0 20.207151,4.93937 45.815252,6.11266 15.65855,0.71823 30.34229,-0.91732 45.25677,-2.69692 28.60157,-3.41533 53.50539,-21.03826 56.63538,-37.14079 4.93172,-25.36583 4.52549,-61.901308 4.52549,-61.901308 0,-49.518998 -32.44414,-64.032543 -32.44414,-64.032543 C 165.861,5.2679473 137.77144,2.1077446 108.58813,1.8691521 Z M 74.843276,40.561072 c 12.155915,0 21.360069,4.672182 27.446624,14.017872 l 5.91811,9.919343 5.91809,-9.919343 c 6.08534,-9.34569 15.28949,-14.017872 27.44664,-14.017872 10.50545,0 18.97017,3.693077 25.43431,10.897586 6.26612,7.204507 9.38608,16.94344 9.38608,29.197743 V 140.61564 H 152.63788 V 82.418319 c 0,-12.267833 -5.16149,-18.494728 -15.48615,-18.494728 -11.41555,0 -17.13636,7.385747 -17.13636,21.99154 V 117.77016 H 96.400641 V 85.915131 c 0,-14.605793 -5.722618,-21.99154 -17.138159,-21.99154 -10.324658,0 -15.486137,6.226895 -15.486137,18.494728 V 140.61564 H 40.021088 V 80.656401 c 0,-12.254303 3.120529,-21.993236 9.387885,-29.197743 C 55.871876,44.254149 64.3366,40.561072 74.843276,40.561072 Z"
+                    style="fill:none;stroke-linecap:square;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.tiktok.com/@blender_org" title="Follow Blender on TikTok" target="_blank"
+                class="social-icons__tiktok">
+                <i class="i-tiktok"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://space.bilibili.com/3546814074587443" title="Follow Blender on Bilibili" target="_blank"
+                class="social-icons__bilibili">
+                <i class="i-bilibili"></i>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <a href="https://fund.blender.org/?utm_medium=www-footer" class="sitemap-title">
+            Support Blender
+          </a>
+          <ul>
+            <li class="mb-3 mt-2">
+              <a href="https://fund.blender.org/?utm_medium=www-footer" class="btn btn-accent"><i class="i-heart"></i> Donate</a>
+            </li>
+            <li>
+              <a class="text-center" href="https://fund.blender.org/donate-once/?utm_medium=www-footer" title="One-time Donation">
+                One-time Donation
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer-note">Artistic freedom starts with Blender <i class="i-heart"></i> <span>The Free and Open
+    Source 3D Creation Suite</span>
+  <div id="hop" title="Be awesome in space">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 448 512">
+      <path
+        d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z">
+      </path>
+    </svg>
+  </div>
+</footer>
+	<script src="https://www.blender.org/wp-content/themes/bthree/assets/js/generated/tutti.min.js?x50197"></script>
+
+	<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/bthree/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<script id="wp-importmap" type="importmap">
+{"imports":{"@wordpress/interactivity":"https://www.blender.org/wp-includes/js/dist/script-modules/interactivity/index.min.js?ver=6a43cba92ed701f32cd9"}}
+</script>
+<script data-wp-router-options="{&quot;loadOnClientNavigation&quot;:true}" fetchpriority="low" id="@wordpress/block-library/image/view-js-module" src="https://www.blender.org/wp-includes/js/dist/script-modules/block-library/image/view.min.js?x50197" type="module"></script>
+<link rel="modulepreload" href="https://www.blender.org/wp-includes/js/dist/script-modules/interactivity/index.min.js?x50197" id="@wordpress/interactivity-js-modulepreload" fetchpriority="low">
+<script id="wp-script-module-data-@wordpress/interactivity" type="application/json">
+{"config":{"core/image":{"defaultAriaLabel":"Enlarged image","closeButtonText":"Close","prevButtonText":"Previous","nextButtonText":"Next"}},"state":{"core/image":{"metadata":{"6ae9f306bb2fa":{"uploadedSrc":"https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-scaled.webp","lightboxSrcset":"https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-scaled.webp 2560w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-512x206.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-1280x514.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-768x308.webp 768w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-1536x617.webp 1536w, https://www.blender.org/wp-content/uploads/2026/03/llama_cpp-2048x822.webp 2048w","figureClassNames":"wp-block-image size-large","figureStyles":null,"imgClassNames":"wp-image-96237","imgStyles":null,"targetWidth":2560,"targetHeight":1028,"scaleAttr":false,"alt":"","galleryId":null,"customAriaLabel":null,"navigationButtonType":"icon","triggerButtonAriaLabel":"Enlarge"},"6ae9f306bb957":{"uploadedSrc":"https://www.blender.org/wp-content/uploads/2026/03/classroom.webp","lightboxSrcset":"https://www.blender.org/wp-content/uploads/2026/03/classroom.webp 2510w, https://www.blender.org/wp-content/uploads/2026/03/classroom-512x230.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/classroom-1280x575.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/classroom-768x345.webp 768w, https://www.blender.org/wp-content/uploads/2026/03/classroom-1536x690.webp 1536w, https://www.blender.org/wp-content/uploads/2026/03/classroom-2048x920.webp 2048w","figureClassNames":"wp-block-image size-large","figureStyles":null,"imgClassNames":"wp-image-96243","imgStyles":null,"targetWidth":2510,"targetHeight":1128,"scaleAttr":false,"alt":"","galleryId":null,"customAriaLabel":null,"navigationButtonType":"icon","triggerButtonAriaLabel":"Enlarge"},"6ae9f306bbf6b":{"uploadedSrc":"https://www.blender.org/wp-content/uploads/2026/03/outlier.webp","lightboxSrcset":"https://www.blender.org/wp-content/uploads/2026/03/outlier.webp 1194w, https://www.blender.org/wp-content/uploads/2026/03/outlier-512x316.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/outlier-768x473.webp 768w","figureClassNames":"wp-block-image size-full is-resized has-custom-border is-style-default","figureStyles":null,"imgClassNames":"wp-image-96242","imgStyles":"border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;aspect-ratio:1.622317049869435;width:713px;height:auto","targetWidth":1194,"targetHeight":736,"scaleAttr":false,"alt":"Graph analysis of the polycount per screen area","galleryId":null,"customAriaLabel":"Enlarged image: Graph analysis of the polycount per screen area","navigationButtonType":"icon","triggerButtonAriaLabel":"Enlarge"},"6ae9f306bc4fb":{"uploadedSrc":"https://www.blender.org/wp-content/uploads/2026/03/outlier-1.webp","lightboxSrcset":"https://www.blender.org/wp-content/uploads/2026/03/outlier-1.webp 2510w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-512x230.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-1280x575.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-768x345.webp 768w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-1536x690.webp 1536w, https://www.blender.org/wp-content/uploads/2026/03/outlier-1-2048x920.webp 2048w","figureClassNames":"wp-block-image size-large","figureStyles":null,"imgClassNames":"wp-image-96244","imgStyles":null,"targetWidth":2510,"targetHeight":1128,"scaleAttr":false,"alt":"","galleryId":null,"customAriaLabel":null,"navigationButtonType":"icon","triggerButtonAriaLabel":"Enlarge"},"6ae9f306bcfc9":{"uploadedSrc":"https://www.blender.org/wp-content/uploads/2026/03/labs-frames.webp","lightboxSrcset":"https://www.blender.org/wp-content/uploads/2026/03/labs-frames.webp 1398w, https://www.blender.org/wp-content/uploads/2026/03/labs-frames-512x371.webp 512w, https://www.blender.org/wp-content/uploads/2026/03/labs-frames-1280x927.webp 1280w, https://www.blender.org/wp-content/uploads/2026/03/labs-frames-768x556.webp 768w","figureClassNames":"wp-block-image size-large","figureStyles":null,"imgClassNames":"wp-image-96217","imgStyles":null,"targetWidth":1398,"targetHeight":1012,"scaleAttr":false,"alt":"Documentation frames added to the geometry nodes setup.","galleryId":null,"customAriaLabel":"Enlarged image: Documentation frames added to the geometry nodes setup.","navigationButtonType":"icon","triggerButtonAriaLabel":"Enlarge"}}}}}
+</script>
+		<div
+			class="wp-lightbox-overlay zoom"
+			aria-label="Enlarged images"
+			data-wp-interactive="core/image"
+			data-wp-router-region='{ "id": "core/image-overlay", "attachTo": "body" }'
+			data-wp-key="wp-lightbox-overlay"
+			data-wp-context='{}'
+			data-wp-bind--role="state.roleAttribute"
+			data-wp-bind--aria-label="state.ariaLabel"
+			data-wp-bind--aria-modal="state.ariaModal"
+			data-wp-class--active="state.overlayEnabled"
+			data-wp-class--show-closing-animation="state.overlayOpened"
+			data-wp-watch---focus="callbacks.setOverlayFocus"
+			data-wp-watch---inert="callbacks.setInertElements"
+			data-wp-on--keydown="actions.handleKeydown"
+			data-wp-on--touchstart="actions.handleTouchStart"
+			data-wp-on--touchmove="actions.handleTouchMove"
+			data-wp-on--touchend="actions.handleTouchEnd"
+			data-wp-on--click="actions.hideLightbox"
+			data-wp-on-window--resize="callbacks.setOverlayStyles"
+			data-wp-on-window--scroll="actions.handleScroll"
+			data-wp-bind--style="state.overlayStyles"
+			tabindex="-1"
+			>
+				<button type="button" style="fill:#000" class="wp-lightbox-close-button" data-wp-bind--aria-label="state.closeButtonAriaLabel">
+					<span class="wp-lightbox-close-icon" data-wp-bind--hidden="!state.hasNavigationIcon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"></path></svg></span>
+					<span class="wp-lightbox-close-text" data-wp-bind--hidden="!state.hasNavigationText">Close</span>
+				</button>
+				<button type="button" style="fill:#000" class="wp-lightbox-navigation-button wp-lightbox-navigation-button-prev" data-wp-bind--hidden="!state.hasNavigation" data-wp-on--click="actions.showPreviousImage" data-wp-bind--aria-label="state.prevButtonAriaLabel">
+					<span class="wp-lightbox-navigation-icon" data-wp-bind--hidden="!state.hasNavigationIcon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"></path></svg></span>
+					<span class="wp-lightbox-navigation-text" data-wp-bind--hidden="!state.hasNavigationText">Previous</span>
+				</button>
+				<div class="lightbox-image-container">
+					<figure data-wp-bind--class="state.selectedImage.figureClassNames" data-wp-bind--style="state.figureStyles">
+						<img data-wp-bind--alt="state.selectedImage.alt" data-wp-bind--class="state.selectedImage.imgClassNames" data-wp-bind--style="state.imgStyles" data-wp-bind--src="state.selectedImage.currentSrc">
+					</figure>
+				</div>
+				<div class="lightbox-image-container">
+					<figure data-wp-bind--class="state.selectedImage.figureClassNames" data-wp-bind--style="state.figureStyles">
+						<img
+							data-wp-bind--alt="state.selectedImage.alt"
+							data-wp-bind--class="state.selectedImage.imgClassNames"
+							data-wp-bind--style="state.imgStyles"
+							data-wp-bind--src="state.enlargedSrc"
+							data-wp-bind--srcset="state.enlargedSrcset"
+							sizes="100vw"
+						>
+					</figure>
+				</div>
+				<button type="button" style="fill:#000" class="wp-lightbox-navigation-button wp-lightbox-navigation-button-next" data-wp-bind--hidden="!state.hasNavigation" data-wp-on--click="actions.showNextImage" data-wp-bind--aria-label="state.nextButtonAriaLabel">
+					<span class="wp-lightbox-navigation-text" data-wp-bind--hidden="!state.hasNavigationText">Next</span>
+					<span class="wp-lightbox-navigation-icon" data-wp-bind--hidden="!state.hasNavigationIcon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"></path></svg></span>
+				</button>
+				<div data-wp-text="state.ariaLabel" aria-live="polite" aria-atomic="true" class="screen-reader-text"></div>
+				<div class="scrim" style="background-color: #fff" aria-hidden="true"></div>
+		</div><script id="wp-emoji-settings" type="application/json">
+{"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"https://www.blender.org/wp-includes/js/wp-emoji-release.min.js?ver=7.1.4"}}
+</script>
+<script type="module">
+/*! This file is auto-generated */
+var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof HTMLScriptElement))throw new Error("Element missing: "+e);const r=JSON.parse(t.text),s=(window._wpemojiSettings=r,"wpEmojiSettingsSupports"),o=["flag","emoji"];function i(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(s,JSON.stringify(t))}catch(e){}}function c(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0);const r=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data);return t.every((e,t)=>e===r[t])}function p(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var n=e.getImageData(16,16,1,1);for(let e=0;e<n.data.length;e++)if(0!==n.data[e])return!1;return!0}function u(e,t,n,r){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!r(e,"\ud83e\u1fac8")}return!1}function f(e,t,n,r){let a;const s=(a="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):document.createElement("canvas")).getContext("2d",{willReadFrequently:!0}),o=(s.textBaseline="top",s.font="600 32px Arial",{});return e.forEach(e=>{o[e]=t(s,e,n,r)}),o}function a(e){var t=document.createElement("script");t.src=e,t.defer=!0,document.head.appendChild(t)}r.supports={everything:!0,everythingExceptFlag:!0},new Promise(t=>{let n=function(){try{var e=JSON.parse(sessionStorage.getItem(s));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(o),u.toString(),c.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"});const a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=e=>{i(n=e.data),a.terminate(),t(n)})}catch(e){}i(n=f(o,u,c,p))}t(n)}).then(e=>{for(const n in e)r.supports[n]=e[n],r.supports.everything=r.supports.everything&&r.supports[n],"flag"!==n&&(r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&r.supports[n]);var t;r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&!r.supports.flag,r.supports.everything||((t=r.source||{}).concatemoji?a(t.concatemoji):t.wpemoji&&t.twemoji&&(a(t.twemoji),a(t.wpemoji)))});
+//# sourceURL=https://www.blender.org/wp-includes/js/wp-emoji-loader.min.js
+</script>
+	
+		</body>
+</html>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Object Caching 148/177 objects using Memcache
+Page Caching using Memcache 
+Database Caching 8/20 queries in 0.004 seconds using Memcache
+
+Served from: www.blender.org @ 2026-11-03 15:43:18 by W3 Total Cache
+-->
