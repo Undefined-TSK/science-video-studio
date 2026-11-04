@@ -22,8 +22,8 @@ from crewai.flow.flow import Flow, listen, start
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 
-# 同机本地端口：host 固定，端口由配置层注入
-BLENDER_MCP_HOST = "localhost"
+# 同机本地端口：host/port 由配置层注入，默认本机直连
+_DEFAULT_HOST = "localhost"
 
 _MAX_RETRIES = 3
 _RETRY_DELAY_SECONDS = 1.5
@@ -61,6 +61,7 @@ class BlenderChecker:
 
     def check(self) -> list[CheckResult]:
         command = os.getenv("BLENDER_MCP_COMMAND", "uv")
+        host = os.getenv("BLENDER_MCP_HOST", _DEFAULT_HOST)
         raw_port = os.getenv("BLENDER_MCP_PORT", "9876")
 
         results: list[CheckResult] = [
@@ -94,13 +95,13 @@ class BlenderChecker:
             )
             return results
 
-        reachable = _socket_reachable(BLENDER_MCP_HOST, port)
+        reachable = _socket_reachable(host, port)
         results.append(
             CheckResult(
                 name="blender-socket",
                 ok=reachable,
                 retryable=True,
-                detail=f"{BLENDER_MCP_HOST}:{port} " + ("可达" if reachable else "不可达"),
+                detail=f"{host}:{port} " + ("可达" if reachable else "不可达"),
                 hint=f"请确认 Blender 已启动且 add-on 正在监听 {port}",
             )
         )

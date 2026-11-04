@@ -42,8 +42,8 @@ BLENDER_MCP_DIR = (
     _blender_dir if _blender_dir.is_absolute() else PROJECT_ROOT / _blender_dir
 )
 
-# 同机本地端口：host 固定为 localhost，端口由配置层注入
-BLENDER_MCP_HOST = "localhost"
+# 同机本地端口：host/port 由配置层注入，默认本机直连
+BLENDER_MCP_HOST = os.getenv("BLENDER_MCP_HOST", "localhost")
 BLENDER_MCP_PORT = os.getenv("BLENDER_MCP_PORT", "9876")
 
 knowledge_sources = [
