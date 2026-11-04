@@ -42,6 +42,10 @@ BLENDER_MCP_DIR = (
     _blender_dir if _blender_dir.is_absolute() else PROJECT_ROOT / _blender_dir
 )
 
+# 同机本地端口：host 固定为 localhost，端口由配置层注入
+BLENDER_MCP_HOST = "localhost"
+BLENDER_MCP_PORT = os.getenv("BLENDER_MCP_PORT", "9876")
+
 knowledge_sources = [
     # CrewAI 官方文档
     TextFileKnowledgeSource(
@@ -58,13 +62,9 @@ knowledge_sources = [
         file_paths=[DOCS / "three" / "llms.txt", DOCS / "three" / "llms-full.txt"],
         collection_name="three",
     ),
-    # Blender 官方 MCP 文档 + glTF 导出文档
+    # Blender 官方工具清单（运行期内容；手册由 MCP 的 search_manual_docs 工具按需检索）
     TextFileKnowledgeSource(
-        file_paths=[
-            DOCS / "blender" / "mcp-server.html",
-            DOCS / "blender" / "mcp-tools.rst",
-            DOCS / "blender" / "gltf-export.html",
-        ],
+        file_paths=[DOCS / "blender" / "mcp-tools.rst"],
         collection_name="blender",
     ),
     # ElevenLabs 官方文档 + 官方 OpenAPI 契约
@@ -103,9 +103,11 @@ video_producer = Agent(
         "in what order, and how to process each one.\n\n"
         "Available official capabilities:\n"
         "- 2D+3D rendering: Remotion (React + @remotion/three), HyperFrames (HTML+GSAP)\n"
-        "- 3D assets: Blender Lab official MCP (26 tools; requires a running Blender 5.1+ "
-        "session with the official add-on) → glb → three.js (GLTFLoader); or procedural "
-        "geometry inside Remotion/three.js\n"
+        "- 3D assets: Blender Lab official MCP (26 tools) is connected on localhost and ready. "
+        "Call its tools directly. If a Blender tool fails, stop and report it "
+        "as an environment problem for a human; environment setup is outside the Crew's scope. "
+        "Then take the exported glb into three.js (GLTFLoader), or build procedural geometry "
+        "inside Remotion/three.js\n"
         "- TTS: ElevenLabs REST POST /v1/text-to-speech/{voice_id} (xi-api-key header) "
         "+ Alibaba Bailian models (qwen3-tts-flash, qwen-audio-3.1-tts-flash/plus, "
         "cosyvoice-v3-flash/plus/v2, sambert-zhichu-v1, MiniMax/speech-2.8-hd)\n"
@@ -138,6 +140,10 @@ video_producer = Agent(
                 "run",
                 "blender-mcp",
             ],
+            env={
+                "BLENDER_MCP_HOST": BLENDER_MCP_HOST,
+                "BLENDER_MCP_PORT": BLENDER_MCP_PORT,
+            },
         ),
         # ElevenLabs 官方托管 MCP 已移除：它是 ElevenAgents 管理工具，
         # 不提供通用 TTS/SFX/BGM，且会带来 workspace agent 管理权限。
