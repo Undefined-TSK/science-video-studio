@@ -105,7 +105,7 @@ video_producer = Agent(
         "- 2D+3D rendering: Remotion (React + @remotion/three), HyperFrames (HTML+GSAP)\n"
         "- 3D assets: Blender Lab official MCP (26 tools) is connected on localhost and ready. "
         "Call its tools directly. If a Blender tool fails, stop and report it "
-        "as an environment problem for a human; environment setup is outside the Crew's scope. "
+        "as an environment problem for a human; environment setup is outside the team's scope. "
         "Then take the exported glb into three.js (GLTFLoader), or build procedural geometry "
         "inside Remotion/three.js\n"
         "- TTS: ElevenLabs REST POST /v1/text-to-speech/{voice_id} (xi-api-key header) "
@@ -125,7 +125,6 @@ video_producer = Agent(
     skills=[
         PROJECT_ROOT / "skills" / "remotion",      # 13 个官方 SKILL（remotion-dev/codex-plugin）
         PROJECT_ROOT / "skills" / "hyperframes",   # 9 个官方 SKILL（heygen-com/hyperframes）
-        PROJECT_ROOT / "skills" / "crewai",        # 10 个官方 SKILL
     ],
 
     # ── 眼前货架 B（远程可调用物）──
