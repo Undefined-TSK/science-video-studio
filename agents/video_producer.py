@@ -47,11 +47,6 @@ BLENDER_MCP_HOST = os.getenv("BLENDER_MCP_HOST", "localhost")
 BLENDER_MCP_PORT = os.getenv("BLENDER_MCP_PORT", "9876")
 
 knowledge_sources = [
-    # CrewAI 官方文档
-    TextFileKnowledgeSource(
-        file_paths=[DOCS / "crewai" / "llms.txt", DOCS / "crewai" / "llms-full.txt"],
-        collection_name="crewai",
-    ),
     # Remotion 官方文档
     TextFileKnowledgeSource(
         file_paths=[DOCS / "remotion" / "llms.txt"],
